@@ -34,6 +34,7 @@ import NativeLeadGenForm from './components/NativeLeadGenForm';
 import ProductCarousel from './components/ProductCarousel';
 import KakaoChannelFlow from './components/KakaoChannelFlow';
 import OliveYoungPromo, { PROMO_ITEMS } from './components/OliveYoungPromo';
+import medihealHero from './assets/mediheal-hero.png';
 
 function OliveYoungPromoBrowser() {
   const products = [
@@ -583,7 +584,7 @@ export default function App() {
                     <div className="absolute inset-0">
                       <img
                         src={isStaticList
-                          ? '/mediheal-hero.png'
+                          ? medihealHero
                           : 'https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=750&h=400&fit=crop&crop=center'
                         }
                         alt="" className="w-full h-full object-cover" referrerPolicy="no-referrer"

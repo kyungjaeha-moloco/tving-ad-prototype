@@ -1,5 +1,6 @@
 import { useRef } from 'react';
 import { ShoppingBag } from 'lucide-react';
+import medihealHero from '../assets/mediheal-hero.png';
 
 interface OliveYoungPromoProps {
   onProductClick: (productId: number) => void;
@@ -33,7 +34,7 @@ const HERO_CONFIG = {
     alt: '올리브영 기획전',
   },
   static: {
-    img: '/mediheal-hero.png',
+    img: medihealHero,
     alt: '메디힐 in 올리브영',
   },
 };
