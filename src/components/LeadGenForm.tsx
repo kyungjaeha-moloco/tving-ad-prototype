@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { CheckCircle } from 'lucide-react';
+import { useLocale } from '../LocaleContext';
 
 const MOCK_USER = { name: '하경제', phone: '010-1234-5678', car: 'EV6 GT-Line' };
 
@@ -9,6 +10,7 @@ interface LeadGenFormProps {
 }
 
 export default function LeadGenForm({ onSubmit, variant = 'car' }: LeadGenFormProps) {
+  const { t } = useLocale();
   const [submitted, setSubmitted] = useState(false);
   const [name, setName] = useState(MOCK_USER.name);
   const [phone, setPhone] = useState(MOCK_USER.phone);
@@ -24,12 +26,16 @@ export default function LeadGenForm({ onSubmit, variant = 'car' }: LeadGenFormPr
           <CheckCircle className="text-white" size={30} />
         </div>
         <h2 className="text-[22px] font-bold text-gray-900 mb-2">
-          {isCar ? '시승 신청이 완료되었습니다' : '상담 신청이 완료되었습니다'}
+          {isCar ? t('form.car.success_title') : t('form.insurance.success_title')}
         </h2>
         <p className="text-gray-500 text-sm leading-relaxed">
           {isCar
-            ? <>담당 딜러가 영업일 기준 1~2일 내<br />연락드릴 예정입니다.</>
-            : <>전문 설계사가 영업일 기준 1일 내<br />연락드릴 예정입니다.</>
+            ? t('form.car.success_desc').split('\n').map((line, i) => (
+                <span key={i}>{line}{i === 0 && <br />}</span>
+              ))
+            : t('form.insurance.success_desc').split('\n').map((line, i) => (
+                <span key={i}>{line}{i === 0 && <br />}</span>
+              ))
           }
         </p>
         <button
@@ -37,7 +43,7 @@ export default function LeadGenForm({ onSubmit, variant = 'car' }: LeadGenFormPr
           className="mt-10 px-8 py-3 text-white rounded-lg font-bold text-sm active:scale-95 transition-transform"
           style={{ backgroundColor: accentColor }}
         >
-          닫기
+          {t('form.close')}
         </button>
       </div>
     );
@@ -51,7 +57,7 @@ export default function LeadGenForm({ onSubmit, variant = 'car' }: LeadGenFormPr
             ? 'https://picsum.photos/seed/luxury_suv_ev/800/400'
             : 'https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=800&h=400&fit=crop'
           }
-          alt={isCar ? '시승 차량' : '보험 상담'}
+          alt={isCar ? t('form.car.title') : t('form.insurance.title')}
           className="w-full h-full object-cover"
           referrerPolicy="no-referrer"
         />
@@ -61,26 +67,26 @@ export default function LeadGenForm({ onSubmit, variant = 'car' }: LeadGenFormPr
             {isCar ? 'Test Drive Event' : 'Insurance Consulting'}
           </span>
           <h2 className="text-[17px] font-extrabold leading-tight mt-0.5" style={{ color: accentColor }}>
-            {isCar ? 'The All-New EV6 무료 시승 신청' : '삼성생명 무료 보험 상담'}
+            {isCar ? t('form.car.title') : t('form.insurance.title')}
           </h2>
         </div>
       </div>
 
       <p className="text-[13px] text-gray-500 leading-relaxed">
         {isCar
-          ? <>지금 시승 신청하시면 <span className="font-semibold text-gray-700">스타벅스 아메리카노 쿠폰</span>을 드립니다.</>
-          : <>지금 상담 신청하시면 <span className="font-semibold text-gray-700">배스킨라빈스 기프티콘</span>을 드립니다.</>
+          ? <>{t('form.car.incentive')} <span className="font-semibold text-gray-700">{t('form.car.incentive_item')}</span>{t('form.car.incentive_suffix')}</>
+          : <>{t('form.insurance.incentive')} <span className="font-semibold text-gray-700">{t('form.insurance.incentive_item')}</span>{t('form.insurance.incentive_suffix')}</>
         }
       </p>
 
       <form className="space-y-3" onSubmit={(e) => { e.preventDefault(); setSubmitted(true); }}>
         <div className="space-y-1">
-          <label className="text-[11px] font-semibold text-gray-600">이름</label>
+          <label className="text-[11px] font-semibold text-gray-600">{t('form.name')}</label>
           <input
             type="text"
             value={name}
             onChange={(e) => setName(e.target.value)}
-            placeholder="성함을 입력해주세요"
+            placeholder={t('form.name_placeholder')}
             className="w-full bg-gray-50 border border-gray-200 rounded-lg px-3 py-2.5 text-gray-900 text-sm placeholder:text-gray-400 focus:outline-none transition-colors"
             style={{ '--tw-ring-color': accentColor } as React.CSSProperties}
             required
@@ -88,7 +94,7 @@ export default function LeadGenForm({ onSubmit, variant = 'car' }: LeadGenFormPr
         </div>
 
         <div className="space-y-1">
-          <label className="text-[11px] font-semibold text-gray-600">연락처</label>
+          <label className="text-[11px] font-semibold text-gray-600">{t('form.phone')}</label>
           <input
             type="tel"
             value={phone}
@@ -102,14 +108,14 @@ export default function LeadGenForm({ onSubmit, variant = 'car' }: LeadGenFormPr
         {isCar ? (
           <>
             <div className="space-y-1">
-              <label className="text-[11px] font-semibold text-gray-600">희망 차종</label>
+              <label className="text-[11px] font-semibold text-gray-600">{t('form.car_model')}</label>
               <select
                 value={car}
                 onChange={(e) => setCar(e.target.value)}
                 className="w-full bg-gray-50 border border-gray-200 rounded-lg px-3 py-2.5 text-gray-900 text-sm focus:outline-none transition-colors"
                 required
               >
-                <option value="">차종을 선택해주세요</option>
+                <option value="">{t('form.car_model_placeholder')}</option>
                 <option>EV6 Standard (RWD)</option>
                 <option>EV6 Long Range (RWD)</option>
                 <option>EV6 Long Range (AWD)</option>
@@ -118,7 +124,7 @@ export default function LeadGenForm({ onSubmit, variant = 'car' }: LeadGenFormPr
               </select>
             </div>
             <div className="space-y-1">
-              <label className="text-[11px] font-semibold text-gray-600">희망 시승일</label>
+              <label className="text-[11px] font-semibold text-gray-600">{t('form.test_drive_date')}</label>
               <input
                 type="date"
                 className="w-full bg-gray-50 border border-gray-200 rounded-lg px-3 py-2.5 text-gray-900 text-sm focus:outline-none transition-colors"
@@ -128,30 +134,30 @@ export default function LeadGenForm({ onSubmit, variant = 'car' }: LeadGenFormPr
         ) : (
           <>
             <div className="space-y-1">
-              <label className="text-[11px] font-semibold text-gray-600">관심 보험</label>
+              <label className="text-[11px] font-semibold text-gray-600">{t('form.insurance_type')}</label>
               <select
                 className="w-full bg-gray-50 border border-gray-200 rounded-lg px-3 py-2.5 text-gray-900 text-sm focus:outline-none transition-colors"
-                defaultValue="종합보험"
+                defaultValue={t('insurance.comprehensive')}
                 required
               >
-                <option value="">보험 유형을 선택해주세요</option>
-                <option>종합보험</option>
-                <option>건강보험</option>
-                <option>자동차보험</option>
-                <option>연금보험</option>
-                <option>저축보험</option>
+                <option value="">{t('form.insurance_placeholder')}</option>
+                <option value="comprehensive">{t('insurance.comprehensive')}</option>
+                <option value="health">{t('insurance.health')}</option>
+                <option value="auto">{t('insurance.auto')}</option>
+                <option value="pension">{t('insurance.pension')}</option>
+                <option value="savings">{t('insurance.savings')}</option>
               </select>
             </div>
             <div className="space-y-1">
-              <label className="text-[11px] font-semibold text-gray-600">희망 상담 시간</label>
+              <label className="text-[11px] font-semibold text-gray-600">{t('form.consulting_time')}</label>
               <select
                 className="w-full bg-gray-50 border border-gray-200 rounded-lg px-3 py-2.5 text-gray-900 text-sm focus:outline-none transition-colors"
-                defaultValue="오전 (10시~12시)"
+                defaultValue="morning"
               >
-                <option>오전 (10시~12시)</option>
-                <option>오후 (13시~15시)</option>
-                <option>오후 (15시~17시)</option>
-                <option>저녁 (18시~20시)</option>
+                <option value="morning">{t('time.morning')}</option>
+                <option value="afternoon1">{t('time.afternoon1')}</option>
+                <option value="afternoon2">{t('time.afternoon2')}</option>
+                <option value="evening">{t('time.evening')}</option>
               </select>
             </div>
           </>
@@ -160,10 +166,7 @@ export default function LeadGenForm({ onSubmit, variant = 'car' }: LeadGenFormPr
         <div className="flex items-start gap-2.5">
           <input type="checkbox" id="terms" className="mt-0.5 w-4 h-4 shrink-0" style={{ accentColor }} required />
           <label htmlFor="terms" className="text-[11px] text-gray-500 leading-relaxed">
-            {isCar
-              ? '개인정보 수집 및 이용에 동의합니다. 수집된 정보는 시승 상담 목적으로만 사용됩니다. (필수)'
-              : '개인정보 수집 및 이용에 동의합니다. 수집된 정보는 보험 상담 목적으로만 사용됩니다. (필수)'
-            }
+            {isCar ? t('form.car.terms') : t('form.insurance.terms')}
           </label>
         </div>
 
@@ -172,7 +175,7 @@ export default function LeadGenForm({ onSubmit, variant = 'car' }: LeadGenFormPr
           className="w-full text-white font-bold py-3.5 rounded-lg transition-colors text-[14px] active:scale-[0.98]"
           style={{ backgroundColor: accentColor }}
         >
-          {isCar ? '시승 신청하기' : '상담 신청하기'}
+          {isCar ? t('form.car.submit') : t('form.insurance.submit')}
         </button>
       </form>
     </div>

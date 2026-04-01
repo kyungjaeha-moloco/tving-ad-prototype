@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useLocale } from './LocaleContext';
 import { 
   AdCategory, 
   LeadGenSubtype, 
@@ -33,24 +34,28 @@ import LeadGenForm from './components/LeadGenForm';
 import NativeLeadGenForm from './components/NativeLeadGenForm';
 import ProductCarousel from './components/ProductCarousel';
 import KakaoChannelFlow from './components/KakaoChannelFlow';
+import LineChannelFlow from './components/LineChannelFlow';
 import OliveYoungPromo, { PROMO_ITEMS } from './components/OliveYoungPromo';
 import medihealHero from './assets/mediheal-hero.png';
 
 function OliveYoungPromoBrowser() {
+  const { t } = useLocale();
   const products = [
-    { name: '모로칸오일 트리트먼트 100ml', price: '39,000원', original: '49,000원', discount: '20%', img: 'https://images.unsplash.com/photo-1535585209827-a15fcdbc4c2d?w=200&h=200&fit=crop' },
-    { name: '라보떼 헤어 에센스 오일', price: '18,500원', original: '25,000원', discount: '26%', img: 'https://images.unsplash.com/photo-1519735777090-ec97162dc266?w=200&h=200&fit=crop' },
-    { name: '닥터바디 퍼퓸 바디워시', price: '12,900원', original: '18,000원', discount: '28%', img: 'https://images.unsplash.com/photo-1556227834-09f1de7a7d14?w=200&h=200&fit=crop' },
-    { name: '아모스 녹차 헤어 세럼', price: '15,900원', original: '22,000원', discount: '28%', img: 'https://images.unsplash.com/photo-1585751119414-ef2636f8aede?w=200&h=200&fit=crop' },
-    { name: '려 자양윤모 샴푸 500ml', price: '11,900원', original: '16,000원', discount: '26%', img: 'https://images.unsplash.com/photo-1631729371254-42c2892f0e6e?w=200&h=200&fit=crop' },
-    { name: '일리윤 세라마이드 바디로션', price: '13,500원', original: '19,000원', discount: '29%', img: 'https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?w=200&h=200&fit=crop' },
+    { name: 'Moroccan Oil Treatment 100ml', nameKo: '모로칸오일 트리트먼트 100ml', price: '39,000원', priceEn: '₩39,000', original: '49,000원', originalEn: '₩49,000', discount: '20%', img: 'https://images.unsplash.com/photo-1535585209827-a15fcdbc4c2d?w=200&h=200&fit=crop' },
+    { name: 'La Beaute Hair Essence Oil', nameKo: '라보떼 헤어 에센스 오일', price: '18,500원', priceEn: '₩18,500', original: '25,000원', originalEn: '₩25,000', discount: '26%', img: 'https://images.unsplash.com/photo-1519735777090-ec97162dc266?w=200&h=200&fit=crop' },
+    { name: 'Dr.Body Perfume Body Wash', nameKo: '닥터바디 퍼퓸 바디워시', price: '12,900원', priceEn: '₩12,900', original: '18,000원', originalEn: '₩18,000', discount: '28%', img: 'https://images.unsplash.com/photo-1556227834-09f1de7a7d14?w=200&h=200&fit=crop' },
+    { name: 'Amos Green Tea Hair Serum', nameKo: '아모스 녹차 헤어 세럼', price: '15,900원', priceEn: '₩15,900', original: '22,000원', originalEn: '₩22,000', discount: '28%', img: 'https://images.unsplash.com/photo-1585751119414-ef2636f8aede?w=200&h=200&fit=crop' },
+    { name: 'Ryo Jayang Shampoo 500ml', nameKo: '려 자양윤모 샴푸 500ml', price: '11,900원', priceEn: '₩11,900', original: '16,000원', originalEn: '₩16,000', discount: '26%', img: 'https://images.unsplash.com/photo-1631729371254-42c2892f0e6e?w=200&h=200&fit=crop' },
+    { name: 'Illiyoon Ceramide Body Lotion', nameKo: '일리윤 세라마이드 바디로션', price: '13,500원', priceEn: '₩13,500', original: '19,000원', originalEn: '₩19,000', discount: '29%', img: 'https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?w=200&h=200&fit=crop' },
   ];
+
+  const isEn = useLocale().locale === 'en';
 
   return (
     <div className="bg-white min-h-full">
       <img
         src="https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=750&h=400&fit=crop"
-        alt="올리브영 기획전"
+        alt={t('product.olive_young')}
         className="w-full aspect-[16/9] object-cover"
         referrerPolicy="no-referrer"
       />
@@ -59,29 +64,29 @@ function OliveYoungPromoBrowser() {
           <div className="w-7 h-7 rounded-full bg-[#9bce26] flex items-center justify-center">
             <span className="text-white text-[10px] font-black">OY</span>
           </div>
-          <span className="text-black font-bold text-[14px]">올리브영</span>
+          <span className="text-black font-bold text-[14px]">{t('product.olive_young')}</span>
         </div>
-        <h2 className="text-black font-extrabold text-[20px] leading-tight mt-2">뷰티 꿀 세일</h2>
-        <p className="text-gray-500 text-[13px] mt-1">최대 50% 할인 · 올리브영 단독 기획전</p>
+        <h2 className="text-black font-extrabold text-[20px] leading-tight mt-2">{t('product.beauty_honey_sale')}</h2>
+        <p className="text-gray-500 text-[13px] mt-1">{t('product.up_to_50')}</p>
         <p className="text-gray-400 text-[11px] mt-1">2026.03.20 ~ 2026.04.10</p>
       </div>
       <div className="h-[1px] bg-gray-100 mx-4" />
       <div className="px-4 pt-4 pb-2">
-        <h3 className="text-black font-bold text-[16px]">기획전 상품</h3>
+        <h3 className="text-black font-bold text-[16px]">{t('product.promo_products')}</h3>
       </div>
       <div className="grid grid-cols-2 gap-3 px-4 pb-8">
         {products.map((p, i) => (
           <div key={i} className="border border-gray-100 rounded-xl overflow-hidden">
             <div className="aspect-square bg-gray-50">
-              <img src={p.img} alt={p.name} className="w-full h-full object-cover" referrerPolicy="no-referrer" />
+              <img src={p.img} alt={isEn ? p.name : p.nameKo} className="w-full h-full object-cover" referrerPolicy="no-referrer" />
             </div>
             <div className="p-3">
-              <p className="text-gray-800 text-[12px] font-medium leading-tight line-clamp-2">{p.name}</p>
+              <p className="text-gray-800 text-[12px] font-medium leading-tight line-clamp-2">{isEn ? p.name : p.nameKo}</p>
               <div className="flex items-center gap-1 mt-2">
                 <span className="text-[#FF6B35] text-[13px] font-extrabold">{p.discount}</span>
-                <span className="text-black text-[13px] font-bold">{p.price}</span>
+                <span className="text-black text-[13px] font-bold">{isEn ? p.priceEn : p.price}</span>
               </div>
-              <p className="text-gray-400 text-[11px] line-through">{p.original}</p>
+              <p className="text-gray-400 text-[11px] line-through">{isEn ? p.originalEn : p.original}</p>
             </div>
           </div>
         ))}
@@ -90,50 +95,62 @@ function OliveYoungPromoBrowser() {
   );
 }
 
-const PRODUCT_DETAILS: Record<number, { brand: string; name: string; price: string; original: string; discount: string; desc: string; img: string }> = {
-  1: { brand: '메디힐', name: '마데카소사이드 흔적 리페어 세럼 50ml', price: '19,800원', original: '28,000원', discount: '29%', desc: '마데카소사이드 성분이 피부 흔적을 집중 케어하는 더마 세럼. 올리브영 어워즈 수상.', img: 'https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=400&h=400&fit=crop' },
-  2: { brand: '메디힐', name: 'N.M.F 아쿠아링 수분 패드 60매', price: '14,500원', original: '20,000원', discount: '28%', desc: 'N.M.F 보습 인자가 피부에 즉각적인 수분감을 부여하는 데일리 패드.', img: 'https://images.unsplash.com/photo-1611930022073-b7a4ba5fcccd?w=400&h=400&fit=crop' },
-  3: { brand: '메디힐', name: '티트리 카밍 에센스 패드 50매', price: '12,900원', original: '18,000원', discount: '28%', desc: '티트리 추출물이 자극받은 피부를 빠르게 진정시키는 패드.', img: 'https://images.unsplash.com/photo-1556228578-0d85b1a4d571?w=400&h=400&fit=crop' },
-  4: { brand: '메디힐', name: '콜라겐 에센셜 리프팅 마스크팩 10매', price: '15,900원', original: '22,000원', discount: '28%', desc: '콜라겐이 피부 탄력과 보습에 도움을 주는 시트 마스크팩.', img: 'https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=400&h=400&fit=crop' },
-  5: { brand: '메디힐', name: '마데카 흔적 리페어 앰플 30ml', price: '22,500원', original: '32,000원', discount: '30%', desc: '고농축 마데카소사이드가 피부 재생과 흔적 개선을 돕는 앰플.', img: 'https://images.unsplash.com/photo-1571781926291-c477ebfd024b?w=400&h=400&fit=crop' },
-  6: { brand: '메디힐', name: '마데카소사이드 선 세럼 SPF50+', price: '16,900원', original: '24,000원', discount: '30%', desc: '마데카소사이드 성분의 자외선 차단 세럼. 피부 보호와 진정을 동시에.', img: 'https://images.unsplash.com/photo-1608248543803-ba4f8c70ae0b?w=400&h=400&fit=crop' },
-  11: { brand: '모로칸오일', name: '오일 트리트먼트 100ml', price: '39,000원', original: '49,000원', discount: '20%', desc: '아르간 오일 기반 헤어 트리트먼트. 모든 모발 타입에 윤기와 부드러움을.', img: 'https://images.unsplash.com/photo-1535585209827-a15fcdbc4c2d?w=400&h=400&fit=crop' },
-  12: { brand: '라보떼', name: '헤어 에센스 오일 150ml', price: '18,500원', original: '25,000원', discount: '26%', desc: '가볍게 흡수되는 헤어 에센스로 손상된 모발을 집중 케어.', img: 'https://images.unsplash.com/photo-1519735777090-ec97162dc266?w=400&h=400&fit=crop' },
-  13: { brand: '닥터바디', name: '퍼퓸 바디워시 500ml', price: '12,900원', original: '18,000원', discount: '28%', desc: '은은한 향이 오래 지속되는 퍼퓸 바디워시.', img: 'https://images.unsplash.com/photo-1556227834-09f1de7a7d14?w=400&h=400&fit=crop' },
-  14: { brand: '아모스', name: '녹차 실크 헤어 세럼 80ml', price: '15,900원', original: '22,000원', discount: '28%', desc: '녹차 추출물이 모발에 실크같은 광택과 영양을 부여.', img: 'https://images.unsplash.com/photo-1585751119414-ef2636f8aede?w=400&h=400&fit=crop' },
-  15: { brand: '려', name: '자양윤모 샴푸 500ml', price: '11,900원', original: '16,000원', discount: '26%', desc: '인삼 성분이 두피와 모발에 영양을 공급하는 한방 샴푸.', img: 'https://images.unsplash.com/photo-1631729371254-42c2892f0e6e?w=400&h=400&fit=crop' },
-  16: { brand: '일리윤', name: '세라마이드 아토 바디로션 350ml', price: '13,500원', original: '19,000원', discount: '29%', desc: '세라마이드가 피부 장벽을 강화하고 깊은 보습을 제공.', img: 'https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?w=400&h=400&fit=crop' },
+interface ProductDetail {
+  brand: { ko: string; en: string };
+  name: { ko: string; en: string };
+  price: { ko: string; en: string };
+  original: { ko: string; en: string };
+  discount: string;
+  desc: { ko: string; en: string };
+  img: string;
+}
+
+const PRODUCT_DETAILS: Record<number, ProductDetail> = {
+  1: { brand: { ko: '메디힐', en: 'Mediheal' }, name: { ko: '마데카소사이드 흔적 리페어 세럼 50ml', en: 'Madecassoside Scar Repair Serum 50ml' }, price: { ko: '19,800원', en: '₩19,800' }, original: { ko: '28,000원', en: '₩28,000' }, discount: '29%', desc: { ko: '마데카소사이드 성분이 피부 흔적을 집중 케어하는 더마 세럼.', en: 'A derma serum with madecassoside for intensive scar care.' }, img: 'https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=400&h=400&fit=crop' },
+  2: { brand: { ko: '메디힐', en: 'Mediheal' }, name: { ko: 'N.M.F 아쿠아링 수분 패드 60매', en: 'N.M.F Aquaring Moisture Pad 60pcs' }, price: { ko: '14,500원', en: '₩14,500' }, original: { ko: '20,000원', en: '₩20,000' }, discount: '28%', desc: { ko: 'N.M.F 보습 인자가 피부에 즉각적인 수분감을 부여하는 패드.', en: 'Daily moisture pads with N.M.F hydrating factor.' }, img: 'https://images.unsplash.com/photo-1611930022073-b7a4ba5fcccd?w=400&h=400&fit=crop' },
+  3: { brand: { ko: '메디힐', en: 'Mediheal' }, name: { ko: '티트리 카밍 에센스 패드 50매', en: 'Tea Tree Calming Essence Pad 50pcs' }, price: { ko: '12,900원', en: '₩12,900' }, original: { ko: '18,000원', en: '₩18,000' }, discount: '28%', desc: { ko: '티트리 추출물이 자극받은 피부를 빠르게 진정시키는 패드.', en: 'Tea tree extract pads for rapid skin soothing.' }, img: 'https://images.unsplash.com/photo-1556228578-0d85b1a4d571?w=400&h=400&fit=crop' },
+  4: { brand: { ko: '메디힐', en: 'Mediheal' }, name: { ko: '콜라겐 에센셜 리프팅 마스크팩 10매', en: 'Collagen Essential Lifting Mask 10pcs' }, price: { ko: '15,900원', en: '₩15,900' }, original: { ko: '22,000원', en: '₩22,000' }, discount: '28%', desc: { ko: '콜라겐이 피부 탄력과 보습에 도움을 주는 시트 마스크팩.', en: 'Collagen sheet masks for skin elasticity and hydration.' }, img: 'https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=400&h=400&fit=crop' },
+  5: { brand: { ko: '메디힐', en: 'Mediheal' }, name: { ko: '마데카 흔적 리페어 앰플 30ml', en: 'Madeca Scar Repair Ampoule 30ml' }, price: { ko: '22,500원', en: '₩22,500' }, original: { ko: '32,000원', en: '₩32,000' }, discount: '30%', desc: { ko: '고농축 마데카소사이드가 피부 재생과 흔적 개선을 돕는 앰플.', en: 'High-concentrate madecassoside ampoule for skin regeneration.' }, img: 'https://images.unsplash.com/photo-1571781926291-c477ebfd024b?w=400&h=400&fit=crop' },
+  6: { brand: { ko: '메디힐', en: 'Mediheal' }, name: { ko: '마데카소사이드 선 세럼 SPF50+', en: 'Madecassoside Sun Serum SPF50+' }, price: { ko: '16,900원', en: '₩16,900' }, original: { ko: '24,000원', en: '₩24,000' }, discount: '30%', desc: { ko: '마데카소사이드 성분의 자외선 차단 세럼.', en: 'Madecassoside sun protection serum.' }, img: 'https://images.unsplash.com/photo-1608248543803-ba4f8c70ae0b?w=400&h=400&fit=crop' },
+  11: { brand: { ko: '모로칸오일', en: 'Moroccanoil' }, name: { ko: '오일 트리트먼트 100ml', en: 'Oil Treatment 100ml' }, price: { ko: '39,000원', en: '₩39,000' }, original: { ko: '49,000원', en: '₩49,000' }, discount: '20%', desc: { ko: '아르간 오일 기반 헤어 트리트먼트.', en: 'Argan oil-based hair treatment for all hair types.' }, img: 'https://images.unsplash.com/photo-1535585209827-a15fcdbc4c2d?w=400&h=400&fit=crop' },
+  12: { brand: { ko: '라보떼', en: 'La Beaute' }, name: { ko: '헤어 에센스 오일 150ml', en: 'Hair Essence Oil 150ml' }, price: { ko: '18,500원', en: '₩18,500' }, original: { ko: '25,000원', en: '₩25,000' }, discount: '26%', desc: { ko: '가볍게 흡수되는 헤어 에센스.', en: 'Lightweight hair essence for damaged hair.' }, img: 'https://images.unsplash.com/photo-1519735777090-ec97162dc266?w=400&h=400&fit=crop' },
+  13: { brand: { ko: '닥터바디', en: 'Dr.Body' }, name: { ko: '퍼퓸 바디워시 500ml', en: 'Perfume Body Wash 500ml' }, price: { ko: '12,900원', en: '₩12,900' }, original: { ko: '18,000원', en: '₩18,000' }, discount: '28%', desc: { ko: '은은한 향이 오래 지속되는 퍼퓸 바디워시.', en: 'Long-lasting fragrance perfume body wash.' }, img: 'https://images.unsplash.com/photo-1556227834-09f1de7a7d14?w=400&h=400&fit=crop' },
+  14: { brand: { ko: '아모스', en: 'Amos' }, name: { ko: '녹차 실크 헤어 세럼 80ml', en: 'Green Tea Silk Hair Serum 80ml' }, price: { ko: '15,900원', en: '₩15,900' }, original: { ko: '22,000원', en: '₩22,000' }, discount: '28%', desc: { ko: '녹차 추출물이 모발에 실크같은 광택과 영양을 부여.', en: 'Green tea extract for silky smooth hair.' }, img: 'https://images.unsplash.com/photo-1585751119414-ef2636f8aede?w=400&h=400&fit=crop' },
+  15: { brand: { ko: '려', en: 'Ryo' }, name: { ko: '자양윤모 샴푸 500ml', en: 'Jayang Nourishing Shampoo 500ml' }, price: { ko: '11,900원', en: '₩11,900' }, original: { ko: '16,000원', en: '₩16,000' }, discount: '26%', desc: { ko: '인삼 성분이 두피와 모발에 영양을 공급.', en: 'Ginseng-enriched herbal shampoo for scalp and hair.' }, img: 'https://images.unsplash.com/photo-1631729371254-42c2892f0e6e?w=400&h=400&fit=crop' },
+  16: { brand: { ko: '일리윤', en: 'Illiyoon' }, name: { ko: '세라마이드 아토 바디로션 350ml', en: 'Ceramide Ato Body Lotion 350ml' }, price: { ko: '13,500원', en: '₩13,500' }, original: { ko: '19,000원', en: '₩19,000' }, discount: '29%', desc: { ko: '세라마이드가 피부 장벽을 강화하고 깊은 보습을 제공.', en: 'Ceramide for skin barrier strengthening and deep hydration.' }, img: 'https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?w=400&h=400&fit=crop' },
 };
 
 function OliveYoungProductPage({ productId }: { productId: number }) {
+  const { locale, t } = useLocale();
   const product = PRODUCT_DETAILS[productId];
   if (!product) return null;
 
   return (
     <div className="bg-white min-h-full">
       <div className="aspect-square bg-gray-50">
-        <img src={product.img} alt={product.name} className="w-full h-full object-cover" referrerPolicy="no-referrer" />
+        <img src={product.img} alt={product.name[locale]} className="w-full h-full object-cover" referrerPolicy="no-referrer" />
       </div>
       <div className="px-4 py-4">
-        <p className="text-gray-500 text-[12px] font-medium">{product.brand}</p>
-        <h2 className="text-black font-bold text-[18px] leading-tight mt-1">{product.name}</h2>
+        <p className="text-gray-500 text-[12px] font-medium">{product.brand[locale]}</p>
+        <h2 className="text-black font-bold text-[18px] leading-tight mt-1">{product.name[locale]}</h2>
         <div className="flex items-center gap-2 mt-3">
           <span className="text-[#FF6B35] text-[20px] font-extrabold">{product.discount}</span>
-          <span className="text-black text-[20px] font-bold">{product.price}</span>
+          <span className="text-black text-[20px] font-bold">{product.price[locale]}</span>
         </div>
-        <p className="text-gray-400 text-[13px] line-through">{product.original}</p>
-        <p className="text-gray-600 text-[13px] leading-relaxed mt-4">{product.desc}</p>
+        <p className="text-gray-400 text-[13px] line-through">{product.original[locale]}</p>
+        <p className="text-gray-600 text-[13px] leading-relaxed mt-4">{product.desc[locale]}</p>
       </div>
       <div className="h-[1px] bg-gray-100 mx-4" />
       <div className="px-4 py-4 flex gap-3">
-        <button className="flex-1 bg-gray-100 text-gray-700 font-bold text-[14px] py-3 rounded-xl">장바구니</button>
-        <button className="flex-1 bg-[#9bce26] text-white font-bold text-[14px] py-3 rounded-xl">바로 구매</button>
+        <button className="flex-1 bg-gray-100 text-gray-700 font-bold text-[14px] py-3 rounded-xl">{t('product.add_to_cart')}</button>
+        <button className="flex-1 bg-[#9bce26] text-white font-bold text-[14px] py-3 rounded-xl">{t('product.buy_now')}</button>
       </div>
     </div>
   );
 }
 
 export default function App() {
+  const { locale, setLocale, t } = useLocale();
   const [category, setCategory] = useState<AdCategory>('leadgen');
   const [leadGenSubtype, setLeadGenSubtype] = useState<LeadGenSubtype>('manual');
   const [productSubtype, setProductSubtype] = useState<ProductSubtype>('promo_list');
@@ -185,36 +202,46 @@ export default function App() {
   const adContent = isMessaging
     ? {
         videoImg: 'https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=750&h=422&fit=crop&crop=center',
-        videoAlt: '보험 상담 광고',
-        advertiser: '보험 · 삼성생명 · 자세히 알아보기',
+        videoAlt: t('ad.insurance.video_alt'),
+        advertiser: t('ad.insurance.advertiser'),
         bannerImg: 'https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=700&h=200&fit=crop&crop=center',
-        bannerAlt: '보험 상담 배너',
-        bannerTag: 'Insurance Consulting',
-        bannerTitle: '삼성생명 무료 보험 상담',
-        bannerSub: '지금 상담 신청하면 기프티콘 증정',
-        outstreamAlt: '보험 상담 광고',
+        bannerAlt: t('ad.insurance.video_alt'),
+        bannerTag: t('ad.insurance.banner_tag'),
+        bannerTitle: t('ad.insurance.banner_title'),
+        bannerSub: t('ad.insurance.banner_sub'),
+        outstreamAlt: t('ad.insurance.video_alt'),
       }
     : {
         videoImg: 'https://images.unsplash.com/photo-1603584173870-7f23fdae1b7a?w=750&h=422&fit=crop&crop=center',
-        videoAlt: 'EV6 자동차 광고',
-        advertiser: '자동차 · KIA EV6 · 자세히 알아보기',
+        videoAlt: t('ad.car.video_alt'),
+        advertiser: t('ad.car.advertiser'),
         bannerImg: 'https://images.unsplash.com/photo-1603584173870-7f23fdae1b7a?w=700&h=200&fit=crop&crop=center',
-        bannerAlt: 'EV6 시승 배너',
-        bannerTag: 'Test Drive Event',
-        bannerTitle: 'KIA EV6 무료 시승 신청',
-        bannerSub: '지금 신청하면 스타벅스 쿠폰 증정',
-        outstreamAlt: 'EV6 자동차 광고',
+        bannerAlt: t('ad.car.video_alt'),
+        bannerTag: t('ad.car.banner_tag'),
+        bannerTitle: t('ad.car.banner_title'),
+        bannerSub: t('ad.car.banner_sub'),
+        outstreamAlt: t('ad.car.video_alt'),
       };
 
   const ActionButtons = () => (
     <div className="flex gap-2 w-full">
       {isMessaging ? (
         <button 
-          onClick={() => alert('카카오톡 채널로 연결됩니다.')}
-          className="bg-[#FEE500] text-[#3C1E1E] px-4 py-2.5 rounded-full font-bold text-[11px] flex items-center justify-center gap-2 flex-1 active:scale-95 transition-transform"
+          onClick={() => alert(t('kakao.alert'))}
+          className={`px-4 py-2.5 rounded-full font-bold text-[11px] flex items-center justify-center gap-2 flex-1 active:scale-95 transition-transform ${
+            locale === 'en'
+              ? 'bg-[#06C755] text-white'
+              : 'bg-[#FEE500] text-[#3C1E1E]'
+          }`}
         >
-          <MessageCircle size={15} fill="#3C1E1E" />
-          상담 시작하기
+          {locale === 'en' ? (
+            <svg width="15" height="15" viewBox="0 0 40 40" fill="none">
+              <path d="M33 18.2C33 12.5 27.2 7.8 20 7.8C12.8 7.8 7 12.5 7 18.2C7 23.3 11.5 27.6 17.6 28.5C18 28.6 18.6 28.7 18.7 29C18.8 29.3 18.8 29.7 18.7 30L18.4 31.4C18.3 31.8 18.1 32.6 19.1 32.2C20.1 31.8 26.8 27.6 29.6 24.3C31.7 22 33 20.2 33 18.2Z" fill="white"/>
+            </svg>
+          ) : (
+            <MessageCircle size={15} fill="#3C1E1E" />
+          )}
+          {t('action.start_consulting')}
         </button>
       ) : (
         <>
@@ -223,14 +250,14 @@ export default function App() {
             className="bg-red-600 text-white px-3 py-2.5 rounded-lg font-bold text-[11px] flex items-center justify-center gap-1.5 flex-1 active:scale-95 transition-transform"
           >
             <Smartphone size={13} />
-            인앱 브라우저
+            {t('action.inapp_browser')}
           </button>
           <button 
             onClick={() => handleTriggerAd('bottomsheet')}
             className="bg-white text-black px-3 py-2.5 rounded-lg font-bold text-[11px] flex items-center justify-center gap-1.5 flex-1 active:scale-95 transition-transform"
           >
             <ChevronDown size={13} />
-            바텀 시트
+            {t('action.bottom_sheet')}
           </button>
         </>
       )}
@@ -248,21 +275,30 @@ export default function App() {
       {/* ── Control Panel ── */}
       <header className="sticky top-0 z-50 bg-[#0a0a0a]/90 backdrop-blur-xl border-b border-white/10 px-6 py-4">
         <div className="max-w-5xl mx-auto flex flex-col gap-3">
-          <div className="flex items-center justify-start">
+          <div className="flex items-center justify-between">
             <div className="flex bg-[#1a1a1a] p-1 rounded-xl border border-white/5">
               <button
                 onClick={() => setCategory('leadgen')}
                 className={`px-4 py-1.5 rounded-lg text-xs font-bold transition-all ${category === 'leadgen' ? 'bg-red-600 text-white shadow-lg' : 'text-gray-400 hover:text-white'}`}
               >
-                리드젠 광고
+                {t('category.leadgen')}
               </button>
               <button
                 onClick={() => setCategory('product')}
                 className={`px-4 py-1.5 rounded-lg text-xs font-bold transition-all ${category === 'product' ? 'bg-red-600 text-white shadow-lg' : 'text-gray-400 hover:text-white'}`}
               >
-                프러덕트 카탈로그
+                {t('category.product')}
               </button>
             </div>
+
+            <button
+              onClick={() => setLocale(locale === 'ko' ? 'en' : 'ko')}
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-white/10 text-[11px] font-bold transition-all hover:border-white/30 bg-[#1a1a1a]"
+            >
+              <span className={locale === 'ko' ? 'text-white' : 'text-gray-500'}>KR</span>
+              <span className="text-gray-600">/</span>
+              <span className={locale === 'en' ? 'text-white' : 'text-gray-500'}>EN</span>
+            </button>
           </div>
 
           <div className="flex items-center gap-6 flex-wrap">
@@ -308,10 +344,10 @@ export default function App() {
                 ) : (
                   <>
                     <button onClick={() => setViewMode('inapp')} className={`px-3 py-1.5 rounded-full text-[10px] font-bold border transition-all flex items-center gap-1.5 ${viewMode === 'inapp' ? 'bg-white/10 text-white border-white/20' : 'text-gray-500 border-white/10'}`}>
-                      <Smartphone size={10} /> 인앱
+                      <Smartphone size={10} /> {t('view.inapp')}
                     </button>
                     <button onClick={() => setViewMode('bottomsheet')} className={`px-3 py-1.5 rounded-full text-[10px] font-bold border transition-all flex items-center gap-1.5 ${viewMode === 'bottomsheet' ? 'bg-white/10 text-white border-white/20' : 'text-gray-500 border-white/10'}`}>
-                      <ChevronDown size={10} /> 바텀시트
+                      <ChevronDown size={10} /> {t('view.bottomsheet')}
                     </button>
                   </>
                 )}
@@ -381,7 +417,7 @@ export default function App() {
 
               {/* Category Tabs */}
               <div className="px-3 pt-1 pb-2 flex gap-[14px] overflow-x-auto scrollbar-hide">
-                {['홈', '드라마', '예능', '영화', '스포츠', '애니', '뉴스'].map((tab, i) => (
+                {[t('tab.home'), t('tab.drama'), t('tab.entertainment'), t('tab.movie'), t('tab.sports'), t('tab.anime'), t('tab.news')].map((tab, i) => (
                   <button
                     key={tab}
                     className={`shrink-0 text-[15px] font-bold pb-1 transition-colors ${
@@ -396,9 +432,9 @@ export default function App() {
               {/* Ranking Section */}
               <div className="pl-3 pt-2 pb-3 flex gap-[10px] overflow-x-auto scrollbar-hide">
                 {[
-                  { rank: 1, title: 'YTN', sub: '뉴스퀘어 2PM', pct: '30.6%', color: '#0072bc', logo: 'YTN', img: 'https://images.unsplash.com/photo-1495020689067-958852a7765e?w=300&h=170&fit=crop' },
-                  { rank: 2, title: 'MBC 무한도전', sub: '[335회] 무한도전 우리!...', pct: '10.4%', color: '#c8102e', logo: 'MBC', img: 'https://images.unsplash.com/photo-1522869635100-9f4c5e86aa37?w=300&h=170&fit=crop' },
-                  { rank: 3, title: '연합뉴스', sub: '뉴스 현장', pct: '8.3%', color: '#e85d00', logo: '연합', img: 'https://images.unsplash.com/photo-1504711434969-e33886168d6c?w=300&h=170&fit=crop' },
+                  { rank: 1, title: 'YTN', sub: t('ranking.sub_newsquare'), pct: '30.6%', color: '#0072bc', logo: 'YTN', img: 'https://images.unsplash.com/photo-1495020689067-958852a7765e?w=300&h=170&fit=crop' },
+                  { rank: 2, title: 'MBC', sub: t('ranking.sub_mudo'), pct: '10.4%', color: '#c8102e', logo: 'MBC', img: 'https://images.unsplash.com/photo-1522869635100-9f4c5e86aa37?w=300&h=170&fit=crop' },
+                  { rank: 3, title: locale === 'ko' ? '연합뉴스' : 'Yonhap', sub: t('ranking.sub_yonhap'), pct: '8.3%', color: '#e85d00', logo: locale === 'ko' ? '연합' : 'YH', img: 'https://images.unsplash.com/photo-1504711434969-e33886168d6c?w=300&h=170&fit=crop' },
                 ].map((item) => (
                   <div key={item.rank} className="shrink-0 w-[150px]">
                     <div className="relative w-full aspect-[16/10] rounded-lg overflow-hidden bg-[#111]">
@@ -440,7 +476,7 @@ export default function App() {
                     onClick={() => handleTriggerAd(viewMode)}
                     className="absolute bottom-[16px] right-3 bg-white/95 text-black pl-3 pr-2.5 py-[5px] rounded-[3px] font-bold text-[11px] flex items-center gap-1 shadow-sm active:scale-95 transition-transform z-10"
                   >
-                    광고 정보 더보기
+                    {t('ad.more_info')}
                     <ExternalLink size={11} strokeWidth={2.5} />
                   </button>
 
@@ -462,15 +498,15 @@ export default function App() {
 
               {/* Popular Binge Channels */}
               <div className="px-4 pt-4 pb-2 flex items-center justify-between">
-                <h3 className="text-white text-[16px] font-bold">인기 정주행 채널</h3>
-                <button className="text-gray-500 text-[12px]">더보기</button>
+                <h3 className="text-white text-[16px] font-bold">{t('section.popular_binge')}</h3>
+                <button className="text-gray-500 text-[12px]">{t('section.see_more')}</button>
               </div>
 
               <div className="pl-4 pb-4 flex gap-[10px] overflow-x-auto scrollbar-hide">
                 {[
-                  { title: '삼시세끼 어촌편5', ep: '7화', img: 'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=280&h=380&fit=crop' },
-                  { title: '슬기로운 의사생활 시즌2', ep: '8화', img: 'https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=280&h=380&fit=crop' },
-                  { title: '삼시세끼 고창편', ep: '8화', img: 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=280&h=380&fit=crop' },
+                  { title: t('binge.samsiseki5'), ep: `7${t('binge.ep')}`, img: 'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=280&h=380&fit=crop' },
+                  { title: t('binge.hospital2'), ep: `8${t('binge.ep')}`, img: 'https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=280&h=380&fit=crop' },
+                  { title: t('binge.samsiseki_gochang'), ep: `8${t('binge.ep')}`, img: 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=280&h=380&fit=crop' },
                 ].map((item, i) => (
                   <div key={i} className="shrink-0 w-[120px]">
                     <div className="w-full aspect-[3/4] rounded-lg overflow-hidden bg-[#1a1a1a]">
@@ -489,11 +525,11 @@ export default function App() {
               {/* Bottom Tab Bar */}
               <div className="absolute bottom-0 left-0 right-0 bg-black/95 backdrop-blur-md border-t border-white/10 flex items-end justify-around px-2 pt-[6px] pb-[22px] z-20">
                 {[
-                  { icon: <Home size={20} />, label: '홈', active: true },
-                  { icon: <><span className="text-[11px] font-black leading-none">ID</span><span className="text-[8px] text-yellow-400 font-bold leading-none -ml-0.5">$</span></>, label: '쇼츠', active: false },
-                  { icon: <><Wifi size={17} /><span className="absolute -top-[1px] -right-[6px] bg-red-600 text-white text-[7px] font-bold w-[13px] h-[13px] rounded-full flex items-center justify-center">N</span></>, label: '라이브', active: false },
-                  { icon: <Search size={20} />, label: '검색', active: false },
-                  { icon: <FolderOpen size={20} />, label: '기록', active: false },
+                  { icon: <Home size={20} />, label: t('tab_bar.home'), active: true },
+                  { icon: <><span className="text-[11px] font-black leading-none">ID</span><span className="text-[8px] text-yellow-400 font-bold leading-none -ml-0.5">$</span></>, label: t('tab_bar.shorts'), active: false },
+                  { icon: <><Wifi size={17} /><span className="absolute -top-[1px] -right-[6px] bg-red-600 text-white text-[7px] font-bold w-[13px] h-[13px] rounded-full flex items-center justify-center">N</span></>, label: t('tab_bar.live'), active: false },
+                  { icon: <Search size={20} />, label: t('tab_bar.search'), active: false },
+                  { icon: <FolderOpen size={20} />, label: t('tab_bar.history'), active: false },
                 ].map((tab, i) => (
                   <button key={i} className="flex flex-col items-center gap-[2px] relative min-w-[48px]">
                     <div className={`relative ${tab.active ? 'text-white' : 'text-gray-600'}`}>{tab.icon}</div>
@@ -528,16 +564,16 @@ export default function App() {
                     onClick={() => handleTriggerAd(viewMode)}
                     className="absolute top-3 right-3 bg-white/95 text-black pl-3 pr-2.5 py-[5px] rounded-[3px] font-bold text-[11px] flex items-center gap-1 shadow-sm active:scale-95 transition-transform"
                   >
-                    광고 정보 더보기
+                    {t('ad.more_info')}
                     <ExternalLink size={11} strokeWidth={2.5} />
                   </button>
 
                   <div className="absolute bottom-[28px] right-0 bg-black/70 pl-3 pr-3 py-[3px] text-white text-[11px] font-medium rounded-l-full">
-                    <span className="font-bold">4</span>초 후 건너뛰기
+                    <span className="font-bold">4</span>{t('ad.skip')}
                   </div>
 
                   <div className="absolute bottom-[8px] right-[10px] text-[11px] font-bold text-white flex items-center gap-[3px]">
-                    광고 <span className="text-[#FFD700]">· 18</span>
+                    {t('ad.label')} <span className="text-[#FFD700]">· 18</span>
                   </div>
 
                   <div className="absolute bottom-[8px] left-[10px] text-[8px] text-white/30 truncate max-w-[50%]">
@@ -548,16 +584,16 @@ export default function App() {
 
               {/* ── Title ── */}
               <div className="px-4 pt-4 pb-1">
-                <h2 className="text-white text-[18px] font-bold leading-snug">뉴스퀘어 2PM</h2>
-                <p className="text-gray-500 text-[13px] mt-[2px]">13:50 ~ 15:50</p>
+                <h2 className="text-white text-[18px] font-bold leading-snug">{t('content.title')}</h2>
+                <p className="text-gray-500 text-[13px] mt-[2px]">{t('content.time')}</p>
               </div>
 
               {/* ── 3 Buttons ── */}
               <div className="px-4 py-3 flex gap-2">
                 {[
-                  { icon: <MessageCircle size={15} />, label: '티빙톡' },
-                  { icon: <LayoutList size={15} />, label: '다음 방송' },
-                  { icon: <Share2 size={15} />, label: '공유' },
+                  { icon: <MessageCircle size={15} />, label: t('btn.tving_talk') },
+                  { icon: <LayoutList size={15} />, label: t('btn.next_show') },
+                  { icon: <Share2 size={15} />, label: t('btn.share') },
                 ].map(({ icon, label }) => (
                   <button key={label} className="flex-1 bg-[#1c1c1c] py-[10px] rounded-lg flex items-center justify-center gap-[6px] text-[12px] font-medium text-white/80 active:bg-[#2a2a2a] transition-colors">
                     {icon} {label}
@@ -601,8 +637,8 @@ export default function App() {
                     >
                       
                       <div className={`min-w-0 ${isPromoList ? 'text-center' : 'flex-1 text-left'}`}>
-                        <p className="text-white text-[13px] font-bold leading-tight">{isStaticList ? '메디힐 in 올리브영' : '뷰티 꿀 세일 최대 50%'}</p>
-                        <p className="text-white/40 text-[10px]">{isStaticList ? '더마 스킨케어 베스트' : '올리브영 단독 기획전'}</p>
+                        <p className="text-white text-[13px] font-bold leading-tight">{isStaticList ? t('product.mediheal_in_oy') : `${t('product.beauty_sale')} 50%`}</p>
+                        <p className="text-white/40 text-[10px]">{isStaticList ? t('product.derma_best') : t('product.oy_exclusive')}</p>
                       </div>
                       
                     </button>
@@ -622,9 +658,9 @@ export default function App() {
                             className="shrink-0 w-[72px] text-left active:scale-[0.95] transition-transform"
                           >
                             <div className="w-[72px] h-[72px] rounded-[8px] overflow-hidden bg-white/10 ring-1 ring-white/10">
-                              <img src={p.img} alt={p.name} className="w-full h-full object-cover" referrerPolicy="no-referrer" />
+                              <img src={p.img} alt={p.name[locale]} className="w-full h-full object-cover" referrerPolicy="no-referrer" />
                             </div>
-                            <p className="text-white/60 text-[9px] font-medium mt-[3px] leading-tight line-clamp-1 text-center">{p.name.split(' ').slice(0, 2).join(' ')}</p>
+                            <p className="text-white/60 text-[9px] font-medium mt-[3px] leading-tight line-clamp-1 text-center">{p.name[locale].split(' ').slice(0, 2).join(' ')}</p>
                           </button>
                         );
                       })}
@@ -665,18 +701,18 @@ export default function App() {
 
               {/* ── Tabs ── */}
               <div className="px-4 pt-3 flex gap-6 border-b border-white/10">
-                <button className="pb-[10px] text-white font-bold text-[14px] border-b-2 border-white">전체 채널</button>
-                <button className="pb-[10px] text-gray-500 font-medium text-[14px]">추천 콘텐츠</button>
+                <button className="pb-[10px] text-white font-bold text-[14px] border-b-2 border-white">{t('tab.all_channels')}</button>
+                <button className="pb-[10px] text-gray-500 font-medium text-[14px]">{t('tab.recommended')}</button>
               </div>
 
 
               {/* ── Channel List ── */}
               <div className="px-4 pt-3 space-y-[14px] pb-36">
                 {[
-                  { title: '뉴스퀘어 2PM', time: '13:50 ~ 15:50', logo: 'YTN', color: '#0072bc' },
-                  { title: '[335회] 무한도전 우리! 어디 가? 두 번째 이야기', time: '14:18 ~ 15:37', logo: 'MBC', color: '#c8102e' },
-                  { title: '뉴스 현장', time: '13:40 ~ 15:10', logo: '연합뉴스TV', color: '#e85d00' },
-                  { title: '명탐정 코난 11기 (자막) 30화', time: '14:29 ~ 14:50', logo: 'ANIMAX', color: '#00b4d8' },
+                  { title: t('content.title'), time: '13:50 ~ 15:50', logo: 'YTN', color: '#0072bc' },
+                  { title: t('channel.mudo'), time: '14:18 ~ 15:37', logo: 'MBC', color: '#c8102e' },
+                  { title: t('channel.yonhap'), time: '13:40 ~ 15:10', logo: locale === 'ko' ? '연합뉴스TV' : 'Yonhap TV', color: '#e85d00' },
+                  { title: t('channel.conan'), time: '14:29 ~ 14:50', logo: 'ANIMAX', color: '#00b4d8' },
                 ].map((item, i) => (
                   <div key={i} className="flex gap-3 items-center">
                     <div className="relative w-[124px] aspect-video rounded-lg overflow-hidden shrink-0">
@@ -731,28 +767,48 @@ export default function App() {
           <BottomSheet
             isOpen={isBottomSheetOpen}
             onClose={() => setIsBottomSheetOpen(false)}
-            title={isMessaging ? '보험 상담 신청' : '시승 신청'}
+            title={isMessaging ? t('bottomsheet.insurance') : t('bottomsheet.test_drive')}
           >
             <NativeLeadGenForm onSubmit={() => setIsBottomSheetOpen(false)} variant={isMessaging ? 'insurance' : 'car'} />
           </BottomSheet>
 
           {/* Web Bridge Overlay */}
           {showBridge && (
-            <div className="absolute inset-0 z-[60] bg-white flex flex-col items-center justify-center gap-6 rounded-[2.2rem]">
-              <div className="w-20 h-20 rounded-[22px] bg-[#FEE500] flex items-center justify-center shadow-lg">
-                <svg width="44" height="44" viewBox="0 0 44 44" fill="none">
-                  <path d="M22 6C12.611 6 5 12.05 5 19.5C5 24.267 8.385 28.42 13.32 30.77L11.5 37.5C11.4 37.85 11.8 38.15 12.1 37.95L20.1 32.75C20.72 32.82 21.35 32.86 22 32.86C31.389 32.86 39 26.93 39 19.5C39 12.05 31.389 6 22 6Z" fill="#3C1E1E"/>
-                </svg>
-              </div>
-              <div className="flex flex-col items-center gap-2">
-                <p className="text-black font-bold text-[15px]">카카오톡으로 이동중입니다...</p>
-                <p className="text-gray-400 text-[12px]">잠시만 기다려주세요</p>
-              </div>
-              <div className="flex items-center gap-2 mt-2">
-                <div className="w-2 h-2 bg-[#FEE500] rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
-                <div className="w-2 h-2 bg-[#FEE500] rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
-                <div className="w-2 h-2 bg-[#FEE500] rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
-              </div>
+            <div className={`absolute inset-0 z-[60] flex flex-col items-center justify-center gap-6 rounded-[2.2rem] ${locale === 'en' ? 'bg-[#06C755]' : 'bg-white'}`}>
+              {locale === 'en' ? (
+                <>
+                  <svg width="80" height="80" viewBox="0 0 80 80" fill="none">
+                    <circle cx="40" cy="40" r="36" fill="white" />
+                    <path d="M58 35.4C58 26.1 49.4 18.6 38.8 18.6C28.2 18.6 19.6 26.1 19.6 35.4C19.6 43.8 26.2 50.9 35.2 52.2C35.8 52.4 36.6 52.6 36.8 53C37 53.4 36.9 54 36.8 54.4L36.4 56.2C36.3 56.8 35.9 57.8 37.3 57.2C38.7 56.6 47.5 51.2 51.4 46.9C54.2 43.9 58 41.5 58 35.4Z" fill="#06C755"/>
+                  </svg>
+                  <div className="flex flex-col items-center gap-2">
+                    <p className="text-white font-bold text-[15px]">{t('bridge.moving_to_kakao')}</p>
+                    <p className="text-white/70 text-[12px]">{t('bridge.please_wait')}</p>
+                  </div>
+                  <div className="flex items-center gap-2 mt-2">
+                    <div className="w-2 h-2 bg-white rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
+                    <div className="w-2 h-2 bg-white rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
+                    <div className="w-2 h-2 bg-white rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
+                  </div>
+                </>
+              ) : (
+                <>
+                  <div className="w-20 h-20 rounded-[22px] bg-[#FEE500] flex items-center justify-center shadow-lg">
+                    <svg width="44" height="44" viewBox="0 0 44 44" fill="none">
+                      <path d="M22 6C12.611 6 5 12.05 5 19.5C5 24.267 8.385 28.42 13.32 30.77L11.5 37.5C11.4 37.85 11.8 38.15 12.1 37.95L20.1 32.75C20.72 32.82 21.35 32.86 22 32.86C31.389 32.86 39 26.93 39 19.5C39 12.05 31.389 6 22 6Z" fill="#3C1E1E"/>
+                    </svg>
+                  </div>
+                  <div className="flex flex-col items-center gap-2">
+                    <p className="text-black font-bold text-[15px]">{t('bridge.moving_to_kakao')}</p>
+                    <p className="text-gray-400 text-[12px]">{t('bridge.please_wait')}</p>
+                  </div>
+                  <div className="flex items-center gap-2 mt-2">
+                    <div className="w-2 h-2 bg-[#FEE500] rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
+                    <div className="w-2 h-2 bg-[#FEE500] rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
+                    <div className="w-2 h-2 bg-[#FEE500] rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
+                  </div>
+                </>
+              )}
             </div>
           )}
         </div>
@@ -769,7 +825,7 @@ export default function App() {
               </svg>
             </div>
 
-            <div className={`relative w-[360px] bg-black rounded-[2.8rem] border-[6px] border-[#2a2a2a] overflow-hidden transition-all duration-500 ${isKakaoActive ? 'shadow-[0_0_60px_rgba(254,229,0,0.15),0_0_120px_rgba(254,229,0,0.06)]' : 'shadow-[0_0_60px_rgba(0,0,0,0.6)] opacity-40'}`} style={{ aspectRatio: '9 / 19.5' }}>
+            <div className={`relative w-[360px] bg-black rounded-[2.8rem] border-[6px] border-[#2a2a2a] overflow-hidden transition-all duration-500 ${isKakaoActive ? (locale === 'en' ? 'shadow-[0_0_60px_rgba(6,199,85,0.15),0_0_120px_rgba(6,199,85,0.06)]' : 'shadow-[0_0_60px_rgba(254,229,0,0.15),0_0_120px_rgba(254,229,0,0.06)]') : 'shadow-[0_0_60px_rgba(0,0,0,0.6)] opacity-40'}`} style={{ aspectRatio: '9 / 19.5' }}>
               {/* Dynamic Island */}
               <div className="absolute top-[11px] left-1/2 -translate-x-1/2 w-[100px] h-[28px] bg-black rounded-full z-50 flex items-center justify-center gap-[38px]">
                 <div className="w-[7px] h-[7px] bg-[#1a1a2e] rounded-full" />
@@ -779,16 +835,26 @@ export default function App() {
                 <div className="absolute inset-0 z-10 overflow-hidden">
                   <div className="h-[11px] bg-black" />
                   <div className="h-[calc(100%-11px)]">
-                    <KakaoChannelFlow key={kakaoKey} />
+                    {locale === 'en' ? <LineChannelFlow key={kakaoKey} /> : <KakaoChannelFlow key={kakaoKey} />}
                   </div>
+                </div>
+              ) : locale === 'en' ? (
+                <div className="absolute inset-0 z-10 bg-[#06C755]/5 flex flex-col items-center justify-center gap-3">
+                  <div className="w-[60px] h-[60px] bg-[#06C755] rounded-2xl flex items-center justify-center">
+                    <svg width="32" height="32" viewBox="0 0 40 40" fill="none">
+                      <path d="M33 18.2C33 12.5 27.2 7.8 20 7.8C12.8 7.8 7 12.5 7 18.2C7 23.3 11.5 27.6 17.6 28.5C18 28.6 18.6 28.7 18.7 29C18.8 29.3 18.8 29.7 18.7 30L18.4 31.4C18.3 31.8 18.1 32.6 19.1 32.2C20.1 31.8 26.8 27.6 29.6 24.3C31.7 22 33 20.2 33 18.2Z" fill="white"/>
+                    </svg>
+                  </div>
+                  <p className="text-gray-500 text-[12px] font-medium">{t('kakao.name')}</p>
+                  <p className="text-gray-600 text-[10px] text-center px-8">{t('kakao.channel_move')}</p>
                 </div>
               ) : (
                 <div className="absolute inset-0 z-10 bg-[#FEE500]/5 flex flex-col items-center justify-center gap-3">
                   <div className="w-[60px] h-[60px] bg-[#FEE500] rounded-2xl flex items-center justify-center">
                     <MessageCircle size={28} className="text-[#3C1E1E]" fill="#3C1E1E" />
                   </div>
-                  <p className="text-gray-500 text-[12px] font-medium">카카오톡</p>
-                  <p className="text-gray-600 text-[10px] text-center px-8">광고 클릭 시 카카오톡 채널로 이동합니다</p>
+                  <p className="text-gray-500 text-[12px] font-medium">{t('kakao.name')}</p>
+                  <p className="text-gray-600 text-[10px] text-center px-8">{t('kakao.channel_move')}</p>
                 </div>
               )}
             </div>

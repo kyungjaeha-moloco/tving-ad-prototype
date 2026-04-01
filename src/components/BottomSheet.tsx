@@ -1,6 +1,7 @@
 import { motion, AnimatePresence } from 'motion/react';
 import { X } from 'lucide-react';
 import { ReactNode } from 'react';
+import { useLocale } from '../LocaleContext';
 
 interface BottomSheetProps {
   isOpen: boolean;
@@ -10,6 +11,7 @@ interface BottomSheetProps {
 }
 
 export default function BottomSheet({ isOpen, onClose, children, title }: BottomSheetProps) {
+  const { t } = useLocale();
   return (
     <AnimatePresence>
       {isOpen && (
@@ -31,7 +33,7 @@ export default function BottomSheet({ isOpen, onClose, children, title }: Bottom
             <div className="w-9 h-[5px] bg-white/20 rounded-full mx-auto mt-[6px] mb-[2px]" />
 
             <div className="flex items-center justify-between px-4 py-2 border-b border-white/10">
-              <h3 className="text-white font-semibold text-[15px] flex-1 text-center">{title || '광고 정보'}</h3>
+              <h3 className="text-white font-semibold text-[15px] flex-1 text-center">{title || t('bottomsheet.default_title')}</h3>
               <button onClick={onClose} className="absolute right-4 p-1 text-white/50 hover:text-white">
                 <X size={20} />
               </button>

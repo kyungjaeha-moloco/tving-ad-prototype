@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { CheckCircle } from 'lucide-react';
+import { useLocale } from '../LocaleContext';
 
 const TVING_RED = '#FF0015';
 const MOCK_USER = { name: '하경제', phone: '010-1234-5678', car: 'EV6 GT-Line' };
@@ -10,6 +11,7 @@ interface NativeLeadGenFormProps {
 }
 
 export default function NativeLeadGenForm({ onSubmit, variant = 'car' }: NativeLeadGenFormProps) {
+  const { t } = useLocale();
   const [submitted, setSubmitted] = useState(false);
   const [agreed, setAgreed] = useState(false);
   const [name, setName] = useState(MOCK_USER.name);
@@ -25,17 +27,17 @@ export default function NativeLeadGenForm({ onSubmit, variant = 'car' }: NativeL
           <CheckCircle className="text-white" size={28} />
         </div>
         <h2 className="text-[18px] font-bold text-white mb-1">
-          {isCar ? '신청 완료' : '상담 신청 완료'}
+          {isCar ? t('native.success_title_car') : t('native.success_title_insurance')}
         </h2>
         <p className="text-gray-400 text-[13px]">
-          {isCar ? '담당 딜러가 곧 연락드리겠습니다.' : '전문 설계사가 곧 연락드리겠습니다.'}
+          {isCar ? t('native.success_desc_car') : t('native.success_desc_insurance')}
         </p>
         <button
           onClick={onSubmit}
           className="mt-8 px-6 py-2.5 font-semibold text-[15px] active:opacity-60"
           style={{ color: TVING_RED }}
         >
-          확인
+          {t('native.confirm')}
         </button>
       </div>
     );
@@ -48,8 +50,8 @@ export default function NativeLeadGenForm({ onSubmit, variant = 'car' }: NativeL
       <div className="text-center pb-1">
         <p className="text-[13px] text-gray-400">
           {isCar
-            ? <>EV6 시승 신청 시 <span className="text-white font-medium">스타벅스 쿠폰</span> 증정</>
-            : <>무료 보험 상담 신청 시 <span className="text-white font-medium">배스킨라빈스 기프티콘</span> 증정</>
+            ? <>{t('native.car.incentive')} <span className="text-white font-medium">{t('native.car.incentive_item')}</span>{t('native.car.incentive_suffix')}</>
+            : <>{t('native.insurance.incentive')} <span className="text-white font-medium">{t('native.insurance.incentive_item')}</span>{t('native.insurance.incentive_suffix')}</>
           }
         </p>
       </div>
@@ -57,19 +59,19 @@ export default function NativeLeadGenForm({ onSubmit, variant = 'car' }: NativeL
       <form onSubmit={(e) => { e.preventDefault(); setSubmitted(true); }}>
         <div className="bg-[#1e1e1e] rounded-xl overflow-hidden divide-y divide-white/[0.06]">
           <div className="flex items-center px-4">
-            <label className="text-[13px] text-gray-400 w-[60px] shrink-0">이름</label>
-            <input type="text" value={name} onChange={(e) => setName(e.target.value)} placeholder="성함을 입력해주세요" className={inputClass} required />
+            <label className="text-[13px] text-gray-400 w-[60px] shrink-0">{t('form.name')}</label>
+            <input type="text" value={name} onChange={(e) => setName(e.target.value)} placeholder={t('form.name_placeholder')} className={inputClass} required />
           </div>
           <div className="flex items-center px-4">
-            <label className="text-[13px] text-gray-400 w-[60px] shrink-0">연락처</label>
+            <label className="text-[13px] text-gray-400 w-[60px] shrink-0">{t('form.phone')}</label>
             <input type="tel" value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="010-0000-0000" className={inputClass} required />
           </div>
           {isCar ? (
             <>
               <div className="flex items-center px-4">
-                <label className="text-[13px] text-gray-400 w-[60px] shrink-0">차종</label>
+                <label className="text-[13px] text-gray-400 w-[60px] shrink-0">{t('native.car_label')}</label>
                 <select value={car} onChange={(e) => setCar(e.target.value)} className="w-full bg-transparent text-[14px] text-white focus:outline-none py-[10px] appearance-none" required>
-                  <option value="" className="bg-[#1e1e1e]">선택해주세요</option>
+                  <option value="" className="bg-[#1e1e1e]">{t('native.select')}</option>
                   <option className="bg-[#1e1e1e]">EV6 Standard</option>
                   <option className="bg-[#1e1e1e]">EV6 Long Range</option>
                   <option className="bg-[#1e1e1e]">EV6 GT-Line</option>
@@ -77,30 +79,30 @@ export default function NativeLeadGenForm({ onSubmit, variant = 'car' }: NativeL
                 </select>
               </div>
               <div className="flex items-center px-4">
-                <label className="text-[13px] text-gray-400 w-[60px] shrink-0">시승일</label>
+                <label className="text-[13px] text-gray-400 w-[60px] shrink-0">{t('native.date_label')}</label>
                 <input type="date" className="w-full bg-transparent text-[14px] text-white focus:outline-none py-[10px] [color-scheme:dark]" />
               </div>
             </>
           ) : (
             <>
               <div className="flex items-center px-4">
-                <label className="text-[13px] text-gray-400 w-[60px] shrink-0">보험</label>
-                <select className="w-full bg-transparent text-[14px] text-white focus:outline-none py-[10px] appearance-none" defaultValue="종합보험" required>
-                  <option value="" className="bg-[#1e1e1e]">선택해주세요</option>
-                  <option className="bg-[#1e1e1e]">종합보험</option>
-                  <option className="bg-[#1e1e1e]">건강보험</option>
-                  <option className="bg-[#1e1e1e]">자동차보험</option>
-                  <option className="bg-[#1e1e1e]">연금보험</option>
-                  <option className="bg-[#1e1e1e]">저축보험</option>
+                <label className="text-[13px] text-gray-400 w-[60px] shrink-0">{t('native.insurance_label')}</label>
+                <select className="w-full bg-transparent text-[14px] text-white focus:outline-none py-[10px] appearance-none" defaultValue={t('insurance.comprehensive')} required>
+                  <option value="" className="bg-[#1e1e1e]">{t('native.select')}</option>
+                  <option className="bg-[#1e1e1e]">{t('insurance.comprehensive')}</option>
+                  <option className="bg-[#1e1e1e]">{t('insurance.health')}</option>
+                  <option className="bg-[#1e1e1e]">{t('insurance.auto')}</option>
+                  <option className="bg-[#1e1e1e]">{t('insurance.pension')}</option>
+                  <option className="bg-[#1e1e1e]">{t('insurance.savings')}</option>
                 </select>
               </div>
               <div className="flex items-center px-4">
-                <label className="text-[13px] text-gray-400 w-[60px] shrink-0">상담</label>
-                <select className="w-full bg-transparent text-[14px] text-white focus:outline-none py-[10px] appearance-none" defaultValue="오전 (10시~12시)">
-                  <option className="bg-[#1e1e1e]">오전 (10시~12시)</option>
-                  <option className="bg-[#1e1e1e]">오후 (13시~15시)</option>
-                  <option className="bg-[#1e1e1e]">오후 (15시~17시)</option>
-                  <option className="bg-[#1e1e1e]">저녁 (18시~20시)</option>
+                <label className="text-[13px] text-gray-400 w-[60px] shrink-0">{t('native.consulting_label')}</label>
+                <select className="w-full bg-transparent text-[14px] text-white focus:outline-none py-[10px] appearance-none" defaultValue={t('time.morning')}>
+                  <option className="bg-[#1e1e1e]">{t('time.morning')}</option>
+                  <option className="bg-[#1e1e1e]">{t('time.afternoon1')}</option>
+                  <option className="bg-[#1e1e1e]">{t('time.afternoon2')}</option>
+                  <option className="bg-[#1e1e1e]">{t('time.evening')}</option>
                 </select>
               </div>
             </>
@@ -108,7 +110,7 @@ export default function NativeLeadGenForm({ onSubmit, variant = 'car' }: NativeL
         </div>
 
         <div className="bg-[#1e1e1e] rounded-xl px-4 py-3 mt-3 flex items-center justify-between gap-3">
-          <span className="text-[13px] text-gray-400 leading-snug flex-1">개인정보 수집 및 이용 동의</span>
+          <span className="text-[13px] text-gray-400 leading-snug flex-1">{t('form.agree_privacy')}</span>
           <button
             type="button"
             onClick={() => setAgreed(!agreed)}
@@ -120,10 +122,7 @@ export default function NativeLeadGenForm({ onSubmit, variant = 'car' }: NativeL
         </div>
 
         <p className="text-[11px] text-gray-600 px-1 mt-1">
-          {isCar
-            ? '수집된 정보는 시승 상담 목적으로만 사용됩니다.'
-            : '수집된 정보는 보험 상담 목적으로만 사용됩니다.'
-          }
+          {isCar ? t('form.privacy_car') : t('form.privacy_insurance')}
         </p>
 
         <button
@@ -136,7 +135,7 @@ export default function NativeLeadGenForm({ onSubmit, variant = 'car' }: NativeL
             cursor: agreed ? 'pointer' : 'not-allowed',
           }}
         >
-          {isCar ? '시승 신청하기' : '상담 신청하기'}
+          {isCar ? t('form.car.submit') : t('form.insurance.submit')}
         </button>
       </form>
     </div>
