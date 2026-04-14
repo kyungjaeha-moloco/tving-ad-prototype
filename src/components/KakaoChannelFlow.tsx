@@ -7,7 +7,9 @@ type KakaoStep = 'channel_home' | 'subscribe_popup' | 'chatroom';
 export default function KakaoChannelFlow() {
   const [step, setStep] = useState<KakaoStep>('channel_home');
   const { locale, genericBranding, t } = useLocale();
-  const marketingOptinLines = t('messaging.marketing_optin').split('\n');
+  const marketingOptinLines = t(
+    genericBranding ? 'generic.messaging.marketing_optin' : 'messaging.marketing_optin'
+  ).split('\n');
   const isEn = locale === 'en';
 
   const StatusBar = () => (

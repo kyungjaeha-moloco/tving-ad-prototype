@@ -151,36 +151,35 @@ const translations = {
   'native.insurance_label': { ko: '보험', en: 'Insurance' },
   'native.consulting_label': { ko: '상담', en: 'Time' },
 
-  // Web Bridge (fictional demo messenger — not third-party marks)
-  'bridge.moving_to_kakao': { ko: '데모톡으로 이동 중입니다...', en: 'Opening DemoChat...' },
+  // Web Bridge — real product names when 일반 브랜드 is off
+  'bridge.moving_to_kakao': { ko: '카카오톡으로 이동중입니다...', en: 'Redirecting to LINE...' },
   'bridge.please_wait': { ko: '잠시만 기다려주세요', en: 'Please wait' },
 
-  // App-to-app idle phone (demo messenger names)
-  'kakao.name': { ko: '데모톡', en: 'DemoChat' },
-  'kakao.channel_move': { ko: '광고 클릭 시 데모톡 채널로 이동합니다', en: 'Tap the ad to open the DemoChat channel' },
-  'kakao.alert': { ko: '데모톡 채널로 연결됩니다.', en: 'Connecting to DemoChat channel.' },
+  'kakao.name': { ko: '카카오톡', en: 'LINE' },
+  'kakao.channel_move': { ko: '광고 클릭 시 카카오톡 채널로 이동합니다', en: 'Click the ad to open LINE Official Account' },
+  'kakao.alert': { ko: '카카오톡 채널로 연결됩니다.', en: 'Connecting to LINE Official Account.' },
 
-  // App-to-app messaging UI (fictional app: 데모톡 / DemoChat)
+  // In-flow copy (KakaoTalk / LINE) — default demo
   'messaging.marketing_optin': {
-    ko: '광고와 마케팅 메시지를\n데모톡으로 받아볼 수 있습니다.',
-    en: 'You can receive ads and marketing\nmessages via DemoChat.',
+    ko: '광고와 마케팅 메시지를\n카카오톡으로 받아볼 수 있습니다.',
+    en: 'You can receive ads and marketing\nmessages via KakaoTalk.',
   },
-  'messaging.official_badge': { ko: '· 공식 데모톡', en: '· Official DemoChat' },
+  'messaging.official_badge': { ko: '· 공식 카카오톡', en: '· Official LINE' },
   'messaging.add_friend_ads': {
-    ko: '이 계정으로 광고·프로모션 메시지를\n데모톡으로 받아보게 됩니다.',
-    en: "You'll receive ads and promotional\nmessages from this account via DemoChat.",
+    ko: '이 계정으로 광고·프로모션 메시지를\n카카오톡으로 받아보게 됩니다.',
+    en: "You'll receive ads and promotional\nmessages from this account via LINE.",
   },
   'messaging.chat_thanks_friend': {
-    ko: "'{name}' 채널을 데모톡 친구로 추가해 주셔서 감사합니다.",
-    en: "Thank you for adding '{name}' on DemoChat!",
+    ko: "'{name}' 채널을 카카오톡 친구로 추가해 주셔서 감사합니다.",
+    en: "Thank you for adding '{name}' as a friend on LINE!",
   },
   'messaging.chat_inbox_line': {
-    ko: '데모톡에서 보험 안내와 프로모션을 받아보실 수 있습니다.',
-    en: "You'll receive plans and promotions in your DemoChat inbox.",
+    ko: '카카오톡에서 보험 안내와 프로모션을 받아보실 수 있습니다.',
+    en: "You'll receive exclusive insurance plans, financial tips, and special promotions directly in your LINE inbox.",
   },
   'messaging.welcome_official_account': {
-    ko: '{brand} 공식 데모톡 계정입니다. 보험 안내와 프로모션 소식을 받아보세요.',
-    en: "Welcome to {brand}'s official DemoChat account. Get insurance updates, tips, and offers.",
+    ko: '{brand} 공식 카카오톡 계정입니다. 보험 안내와 프로모션 소식을 받아보세요.',
+    en: "Welcome to {brand}'s official LINE account! Stay updated with the latest insurance plans, financial tips, and exclusive promotions. Chat with us anytime for personalized consultations.",
   },
   'messaging.chat_consult_offer': {
     ko: '언제든지 상담을 요청하실 수 있습니다.',
@@ -190,7 +189,7 @@ const translations = {
     ko: '{brand}와 함께해 주셔서 감사합니다.',
     en: 'Thanks for connecting with {brand}.',
   },
-  /** Idle-state icon mark on phone mock (데모톡 / DemoChat) */
+  /** Idle icon text when 일반 브랜드 on (non-generic uses bubble icon, not this) */
   'messaging.idle_icon_mark': { ko: '데', en: 'DC' },
 
   // Binge content
@@ -274,6 +273,36 @@ const translations = {
   },
   'generic.line.cta_web': { ko: '데모 금융 웹사이트', en: 'Demo Financial website' },
   'generic.line.cta_consult': { ko: '무료 상담(데모)', en: 'Free consultation (demo)' },
+
+  /** 일반 브랜드 ON — third-party 메신저명 대신 데모톡 / DemoChat */
+  'generic.messaging.app_name': { ko: '데모톡', en: 'DemoChat' },
+  'generic.messaging.channel_move': {
+    ko: '광고 클릭 시 데모톡 채널로 이동합니다',
+    en: 'Tap the ad to open the DemoChat channel',
+  },
+  'generic.messaging.alert': { ko: '데모톡 채널로 연결됩니다.', en: 'Connecting to DemoChat channel.' },
+  'generic.messaging.bridge_opening': { ko: '데모톡으로 이동 중입니다...', en: 'Opening DemoChat...' },
+  'generic.messaging.marketing_optin': {
+    ko: '광고와 마케팅 메시지를\n데모톡으로 받아볼 수 있습니다.',
+    en: 'You can receive ads and marketing\nmessages via DemoChat.',
+  },
+  'generic.messaging.official_badge': { ko: '· 공식 데모톡', en: '· Official DemoChat' },
+  'generic.messaging.add_friend_ads': {
+    ko: '이 계정으로 광고·프로모션 메시지를\n데모톡으로 받아보게 됩니다.',
+    en: "You'll receive ads and promotional\nmessages from this account via DemoChat.",
+  },
+  'generic.messaging.chat_thanks_friend': {
+    ko: "'{name}' 채널을 데모톡 친구로 추가해 주셔서 감사합니다.",
+    en: "Thank you for adding '{name}' on DemoChat!",
+  },
+  'generic.messaging.chat_inbox_line': {
+    ko: '데모톡에서 보험 안내와 프로모션을 받아보실 수 있습니다.',
+    en: "You'll receive plans and promotions in your DemoChat inbox.",
+  },
+  'generic.messaging.welcome_official_account': {
+    ko: '{brand} 공식 데모톡 계정입니다. 보험 안내와 프로모션 소식을 받아보세요.',
+    en: "Welcome to {brand}'s official DemoChat account. Get insurance updates, tips, and offers.",
+  },
 } as const;
 
 export type TranslationKey = keyof typeof translations;

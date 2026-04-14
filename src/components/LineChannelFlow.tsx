@@ -7,7 +7,9 @@ type LineStep = 'channel_home' | 'add_friend_popup' | 'chatroom';
 export default function LineChannelFlow() {
   const [step, setStep] = useState<LineStep>('channel_home');
   const { genericBranding, t } = useLocale();
-  const addFriendAdsLines = t('messaging.add_friend_ads').split('\n');
+  const addFriendAdsLines = t(
+    genericBranding ? 'generic.messaging.add_friend_ads' : 'messaging.add_friend_ads'
+  ).split('\n');
 
   const brandName = genericBranding ? t('generic.financial_full') : 'Samsung Life Insurance';
   const brandNameShort = genericBranding ? t('generic.financial_short') : 'Samsung Life';
@@ -72,7 +74,7 @@ export default function LineChannelFlow() {
 
         <p className="text-gray-500 text-[12px] mt-2">
           {brandName}
-          {t('messaging.official_badge')}
+          {t(genericBranding ? 'generic.messaging.official_badge' : 'messaging.official_badge')}
         </p>
         <p className="text-[#06C755] text-[12px]">{genericBranding ? t('generic.financial_url') : 'insurance.samsung.com'}</p>
 
@@ -103,7 +105,11 @@ export default function LineChannelFlow() {
           <p className="text-gray-700 text-[12px] leading-relaxed">
             {genericBranding
               ? t('generic.line.welcome_blurb')
-              : t('messaging.welcome_official_account').replace('{brand}', brandName)}
+              : t(
+                  genericBranding
+                    ? 'generic.messaging.welcome_official_account'
+                    : 'messaging.welcome_official_account'
+                ).replace('{brand}', brandName)}
           </p>
         </div>
 
@@ -217,11 +223,17 @@ export default function LineChannelFlow() {
               <p className="text-black text-[12px] leading-relaxed">
                 {genericBranding
                   ? t('generic.line.welcome_blurb')
-                  : t('messaging.chat_thanks_friend').replace('{name}', brandNameShort)}
+                  : t(
+                      genericBranding
+                        ? 'generic.messaging.chat_thanks_friend'
+                        : 'messaging.chat_thanks_friend'
+                    ).replace('{name}', brandNameShort)}
               </p>
               {!genericBranding && (
                 <>
-                  <p className="text-black text-[12px] leading-relaxed mt-2">{t('messaging.chat_inbox_line')}</p>
+                  <p className="text-black text-[12px] leading-relaxed mt-2">
+                    {t(genericBranding ? 'generic.messaging.chat_inbox_line' : 'messaging.chat_inbox_line')}
+                  </p>
                   <p className="text-black text-[12px] leading-relaxed mt-2">{t('messaging.chat_consult_offer')}</p>
                   <p className="text-black text-[12px] leading-relaxed mt-2">
                     {t('messaging.chat_welcome_brand').replace('{brand}', brandName)} 💙

@@ -240,7 +240,7 @@ export default function App() {
     <div className="flex gap-2 w-full">
       {isMessaging ? (
         <button 
-          onClick={() => alert(t('kakao.alert'))}
+          onClick={() => alert(t(genericBranding ? 'generic.messaging.alert' : 'kakao.alert'))}
           className={`px-4 py-2.5 rounded-full font-bold text-[11px] flex items-center justify-center gap-2 flex-1 active:scale-95 transition-transform ${
             locale === 'en'
               ? 'bg-[#06C755] text-white'
@@ -854,7 +854,7 @@ export default function App() {
                     <path d="M58 35.4C58 26.1 49.4 18.6 38.8 18.6C28.2 18.6 19.6 26.1 19.6 35.4C19.6 43.8 26.2 50.9 35.2 52.2C35.8 52.4 36.6 52.6 36.8 53C37 53.4 36.9 54 36.8 54.4L36.4 56.2C36.3 56.8 35.9 57.8 37.3 57.2C38.7 56.6 47.5 51.2 51.4 46.9C54.2 43.9 58 41.5 58 35.4Z" fill="#06C755"/>
                   </svg>
                   <div className="flex flex-col items-center gap-2">
-                    <p className="text-white font-bold text-[15px]">{t('bridge.moving_to_kakao')}</p>
+                    <p className="text-white font-bold text-[15px]">{t(genericBranding ? 'generic.messaging.bridge_opening' : 'bridge.moving_to_kakao')}</p>
                     <p className="text-white/70 text-[12px]">{t('bridge.please_wait')}</p>
                   </div>
                   <div className="flex items-center gap-2 mt-2">
@@ -871,7 +871,7 @@ export default function App() {
                     </svg>
                   </div>
                   <div className="flex flex-col items-center gap-2">
-                    <p className="text-black font-bold text-[15px]">{t('bridge.moving_to_kakao')}</p>
+                    <p className="text-black font-bold text-[15px]">{t(genericBranding ? 'generic.messaging.bridge_opening' : 'bridge.moving_to_kakao')}</p>
                     <p className="text-gray-400 text-[12px]">{t('bridge.please_wait')}</p>
                   </div>
                   <div className="flex items-center gap-2 mt-2">
@@ -931,8 +931,8 @@ export default function App() {
                       </svg>
                     )}
                   </div>
-                  <p className="text-gray-500 text-[12px] font-medium">{t('kakao.name')}</p>
-                  <p className="text-gray-600 text-[10px] text-center px-8">{t('kakao.channel_move')}</p>
+                  <p className="text-gray-500 text-[12px] font-medium">{t(genericBranding ? 'generic.messaging.app_name' : 'kakao.name')}</p>
+                  <p className="text-gray-600 text-[10px] text-center px-8">{t(genericBranding ? 'generic.messaging.channel_move' : 'kakao.channel_move')}</p>
                 </div>
               ) : (
                 <div
@@ -953,8 +953,8 @@ export default function App() {
                       <MessageCircle size={28} className="text-[#3C1E1E]" fill="#3C1E1E" />
                     )}
                   </div>
-                  <p className="text-gray-500 text-[12px] font-medium">{t('kakao.name')}</p>
-                  <p className="text-gray-600 text-[10px] text-center px-8">{t('kakao.channel_move')}</p>
+                  <p className="text-gray-500 text-[12px] font-medium">{t(genericBranding ? 'generic.messaging.app_name' : 'kakao.name')}</p>
+                  <p className="text-gray-600 text-[10px] text-center px-8">{t(genericBranding ? 'generic.messaging.channel_move' : 'kakao.channel_move')}</p>
                 </div>
               )}
             </div>
