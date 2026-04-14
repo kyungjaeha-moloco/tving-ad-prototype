@@ -160,7 +160,7 @@ const translations = {
   'kakao.channel_move': { ko: '광고 클릭 시 데모톡 채널로 이동합니다', en: 'Tap the ad to open the DemoChat channel' },
   'kakao.alert': { ko: '데모톡 채널로 연결됩니다.', en: 'Connecting to DemoChat channel.' },
 
-  // Messaging flows (Kakao-style / LINE-style UI copy — generic app name)
+  // App-to-app messaging UI (fictional app: 데모톡 / DemoChat)
   'messaging.marketing_optin': {
     ko: '광고와 마케팅 메시지를\n데모톡으로 받아볼 수 있습니다.',
     en: 'You can receive ads and marketing\nmessages via DemoChat.',
@@ -190,6 +190,8 @@ const translations = {
     ko: '{brand}와 함께해 주셔서 감사합니다.',
     en: 'Thanks for connecting with {brand}.',
   },
+  /** Idle-state icon mark on phone mock (데모톡 / DemoChat) */
+  'messaging.idle_icon_mark': { ko: '데', en: 'DC' },
 
   // Binge content
   'binge.ep': { ko: '화', en: 'EP' },

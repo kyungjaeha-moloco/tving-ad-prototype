@@ -911,19 +911,47 @@ export default function App() {
                   </div>
                 </div>
               ) : locale === 'en' ? (
-                <div className="absolute inset-0 z-10 bg-[#06C755]/5 flex flex-col items-center justify-center gap-3">
-                  <div className="w-[60px] h-[60px] bg-[#06C755] rounded-2xl flex items-center justify-center">
-                    <svg width="32" height="32" viewBox="0 0 40 40" fill="none">
-                      <path d="M33 18.2C33 12.5 27.2 7.8 20 7.8C12.8 7.8 7 12.5 7 18.2C7 23.3 11.5 27.6 17.6 28.5C18 28.6 18.6 28.7 18.7 29C18.8 29.3 18.8 29.7 18.7 30L18.4 31.4C18.3 31.8 18.1 32.6 19.1 32.2C20.1 31.8 26.8 27.6 29.6 24.3C31.7 22 33 20.2 33 18.2Z" fill="white"/>
-                    </svg>
+                <div
+                  className={`absolute inset-0 z-10 flex flex-col items-center justify-center gap-3 ${
+                    genericBranding ? 'bg-zinc-900/40' : 'bg-[#06C755]/5'
+                  }`}
+                >
+                  <div
+                    className={`w-[60px] h-[60px] rounded-2xl flex items-center justify-center ${
+                      genericBranding
+                        ? 'bg-gradient-to-br from-zinc-600 to-zinc-900 ring-1 ring-white/15 shadow-inner'
+                        : 'bg-[#06C755]'
+                    }`}
+                  >
+                    {genericBranding ? (
+                      <span className="text-[13px] font-black text-white tracking-tight">{t('messaging.idle_icon_mark')}</span>
+                    ) : (
+                      <svg width="32" height="32" viewBox="0 0 40 40" fill="none">
+                        <path d="M33 18.2C33 12.5 27.2 7.8 20 7.8C12.8 7.8 7 12.5 7 18.2C7 23.3 11.5 27.6 17.6 28.5C18 28.6 18.6 28.7 18.7 29C18.8 29.3 18.8 29.7 18.7 30L18.4 31.4C18.3 31.8 18.1 32.6 19.1 32.2C20.1 31.8 26.8 27.6 29.6 24.3C31.7 22 33 20.2 33 18.2Z" fill="white"/>
+                      </svg>
+                    )}
                   </div>
                   <p className="text-gray-500 text-[12px] font-medium">{t('kakao.name')}</p>
                   <p className="text-gray-600 text-[10px] text-center px-8">{t('kakao.channel_move')}</p>
                 </div>
               ) : (
-                <div className="absolute inset-0 z-10 bg-[#FEE500]/5 flex flex-col items-center justify-center gap-3">
-                  <div className="w-[60px] h-[60px] bg-[#FEE500] rounded-2xl flex items-center justify-center">
-                    <MessageCircle size={28} className="text-[#3C1E1E]" fill="#3C1E1E" />
+                <div
+                  className={`absolute inset-0 z-10 flex flex-col items-center justify-center gap-3 ${
+                    genericBranding ? 'bg-zinc-900/40' : 'bg-[#FEE500]/5'
+                  }`}
+                >
+                  <div
+                    className={`w-[60px] h-[60px] rounded-2xl flex items-center justify-center ${
+                      genericBranding
+                        ? 'bg-gradient-to-br from-zinc-600 to-zinc-900 ring-1 ring-white/15 shadow-inner'
+                        : 'bg-[#FEE500]'
+                    }`}
+                  >
+                    {genericBranding ? (
+                      <span className="text-[13px] font-black text-white tracking-tight">{t('messaging.idle_icon_mark')}</span>
+                    ) : (
+                      <MessageCircle size={28} className="text-[#3C1E1E]" fill="#3C1E1E" />
+                    )}
                   </div>
                   <p className="text-gray-500 text-[12px] font-medium">{t('kakao.name')}</p>
                   <p className="text-gray-600 text-[10px] text-center px-8">{t('kakao.channel_move')}</p>
