@@ -651,7 +651,10 @@ export default function App() {
               {/* ── 3 Buttons ── */}
               <div className="px-4 py-3 flex gap-2">
                 {[
-                  { icon: <MessageCircle size={15} />, label: t('btn.tving_talk') },
+                  {
+                    icon: <MessageCircle size={15} />,
+                    label: genericBranding ? t('generic.btn_talk') : t('btn.tving_talk'),
+                  },
                   { icon: <LayoutList size={15} />, label: t('btn.next_show') },
                   { icon: <Share2 size={15} />, label: t('btn.share') },
                 ].map(({ icon, label }) => (

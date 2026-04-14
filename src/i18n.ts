@@ -217,6 +217,7 @@ const translations = {
     ko: '실제 기업·방송사명 대신 중립적인 표기와 이미지를 사용합니다',
     en: 'Uses neutral labels and imagery instead of real company or broadcaster names',
   },
+  'generic.btn_talk': { ko: '톡', en: 'Talk' },
   'generic.brand_name': { ko: '큐어스킨', en: 'Cureskin' },
   'generic.item_name_prefix': { ko: '상품', en: 'Product' },
   'generic.product_desc': {
