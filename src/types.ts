@@ -12,6 +12,17 @@ export interface ProductItem {
   image: string;
 }
 
+/** Shared product row for catalog / in-app browser */
+export interface ProductDetail {
+  brand: { ko: string; en: string };
+  name: { ko: string; en: string };
+  price: { ko: string; en: string };
+  original: { ko: string; en: string };
+  discount: string;
+  desc: { ko: string; en: string };
+  img: string;
+}
+
 export const MOCK_PRODUCTS: ProductItem[] = Array.from({ length: 10 }, (_, i) => ({
   id: `${i + 1}`,
   name: `Product ${i + 1}`,

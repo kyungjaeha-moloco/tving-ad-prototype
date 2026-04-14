@@ -10,7 +10,7 @@ interface LeadGenFormProps {
 }
 
 export default function LeadGenForm({ onSubmit, variant = 'car' }: LeadGenFormProps) {
-  const { t } = useLocale();
+  const { t, genericBranding } = useLocale();
   const [submitted, setSubmitted] = useState(false);
   const [name, setName] = useState(MOCK_USER.name);
   const [phone, setPhone] = useState(MOCK_USER.phone);
@@ -57,7 +57,7 @@ export default function LeadGenForm({ onSubmit, variant = 'car' }: LeadGenFormPr
             ? 'https://picsum.photos/seed/luxury_suv_ev/800/400'
             : 'https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=800&h=400&fit=crop'
           }
-          alt={isCar ? t('form.car.title') : t('form.insurance.title')}
+          alt={isCar ? (genericBranding ? t('generic.form.car.title') : t('form.car.title')) : genericBranding ? t('generic.form.insurance.title') : t('form.insurance.title')}
           className="w-full h-full object-cover"
           referrerPolicy="no-referrer"
         />
@@ -67,15 +67,15 @@ export default function LeadGenForm({ onSubmit, variant = 'car' }: LeadGenFormPr
             {isCar ? 'Test Drive Event' : 'Insurance Consulting'}
           </span>
           <h2 className="text-[17px] font-extrabold leading-tight mt-0.5" style={{ color: accentColor }}>
-            {isCar ? t('form.car.title') : t('form.insurance.title')}
+            {isCar ? (genericBranding ? t('generic.form.car.title') : t('form.car.title')) : genericBranding ? t('generic.form.insurance.title') : t('form.insurance.title')}
           </h2>
         </div>
       </div>
 
       <p className="text-[13px] text-gray-500 leading-relaxed">
         {isCar
-          ? <>{t('form.car.incentive')} <span className="font-semibold text-gray-700">{t('form.car.incentive_item')}</span>{t('form.car.incentive_suffix')}</>
-          : <>{t('form.insurance.incentive')} <span className="font-semibold text-gray-700">{t('form.insurance.incentive_item')}</span>{t('form.insurance.incentive_suffix')}</>
+          ? <>{t('form.car.incentive')} <span className="font-semibold text-gray-700">{t(genericBranding ? 'generic.form.car.incentive_item' : 'form.car.incentive_item')}</span>{t('form.car.incentive_suffix')}</>
+          : <>{t('form.insurance.incentive')} <span className="font-semibold text-gray-700">{t(genericBranding ? 'generic.form.insurance.incentive_item' : 'form.insurance.incentive_item')}</span>{t('form.insurance.incentive_suffix')}</>
         }
       </p>
 

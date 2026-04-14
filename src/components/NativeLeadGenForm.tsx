@@ -11,7 +11,7 @@ interface NativeLeadGenFormProps {
 }
 
 export default function NativeLeadGenForm({ onSubmit, variant = 'car' }: NativeLeadGenFormProps) {
-  const { t } = useLocale();
+  const { t, genericBranding } = useLocale();
   const [submitted, setSubmitted] = useState(false);
   const [agreed, setAgreed] = useState(false);
   const [name, setName] = useState(MOCK_USER.name);
@@ -50,8 +50,8 @@ export default function NativeLeadGenForm({ onSubmit, variant = 'car' }: NativeL
       <div className="text-center pb-1">
         <p className="text-[13px] text-gray-400">
           {isCar
-            ? <>{t('native.car.incentive')} <span className="text-white font-medium">{t('native.car.incentive_item')}</span>{t('native.car.incentive_suffix')}</>
-            : <>{t('native.insurance.incentive')} <span className="text-white font-medium">{t('native.insurance.incentive_item')}</span>{t('native.insurance.incentive_suffix')}</>
+            ? <>{t('native.car.incentive')} <span className="text-white font-medium">{t(genericBranding ? 'generic.native.car.incentive_item' : 'native.car.incentive_item')}</span>{t('native.car.incentive_suffix')}</>
+            : <>{t('native.insurance.incentive')} <span className="text-white font-medium">{t(genericBranding ? 'generic.native.insurance.incentive_item' : 'native.insurance.incentive_item')}</span>{t('native.insurance.incentive_suffix')}</>
           }
         </p>
       </div>
@@ -72,10 +72,10 @@ export default function NativeLeadGenForm({ onSubmit, variant = 'car' }: NativeL
                 <label className="text-[13px] text-gray-400 w-[60px] shrink-0">{t('native.car_label')}</label>
                 <select value={car} onChange={(e) => setCar(e.target.value)} className="w-full bg-transparent text-[14px] text-white focus:outline-none py-[10px] appearance-none" required>
                   <option value="" className="bg-[#1e1e1e]">{t('native.select')}</option>
-                  <option className="bg-[#1e1e1e]">EV6 Standard</option>
-                  <option className="bg-[#1e1e1e]">EV6 Long Range</option>
-                  <option className="bg-[#1e1e1e]">EV6 GT-Line</option>
-                  <option className="bg-[#1e1e1e]">EV6 GT</option>
+                  <option className="bg-[#1e1e1e]">{genericBranding ? 'Demo EV Standard' : 'EV6 Standard'}</option>
+                  <option className="bg-[#1e1e1e]">{genericBranding ? 'Demo EV Long Range' : 'EV6 Long Range'}</option>
+                  <option className="bg-[#1e1e1e]">{genericBranding ? 'Demo EV Sport' : 'EV6 GT-Line'}</option>
+                  <option className="bg-[#1e1e1e]">{genericBranding ? 'Demo EV Performance' : 'EV6 GT'}</option>
                 </select>
               </div>
               <div className="flex items-center px-4">

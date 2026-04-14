@@ -1,13 +1,15 @@
 import { useState } from 'react';
 import { ChevronLeft, X, MoreVertical, Search, Menu, Phone } from 'lucide-react';
+import { useLocale } from '../LocaleContext';
 
 type LineStep = 'channel_home' | 'add_friend_popup' | 'chatroom';
 
 export default function LineChannelFlow() {
   const [step, setStep] = useState<LineStep>('channel_home');
+  const { genericBranding, t } = useLocale();
 
-  const brandName = 'Samsung Life Insurance';
-  const brandNameShort = 'Samsung Life';
+  const brandName = genericBranding ? t('generic.financial_full') : 'Samsung Life Insurance';
+  const brandNameShort = genericBranding ? t('generic.financial_short') : 'Samsung Life';
 
   const StatusBar = () => (
     <div className="flex items-end pb-[6px] px-7 justify-between h-[48px]">
@@ -68,7 +70,7 @@ export default function LineChannelFlow() {
         </div>
 
         <p className="text-gray-500 text-[12px] mt-2">{brandName} OFFICIAL LINE</p>
-        <p className="text-[#06C755] text-[12px]">insurance.samsung.com</p>
+        <p className="text-[#06C755] text-[12px]">{genericBranding ? t('generic.financial_url') : 'insurance.samsung.com'}</p>
 
         <button
           onClick={() => setStep('add_friend_popup')}
@@ -95,7 +97,7 @@ export default function LineChannelFlow() {
         <h4 className="text-black font-bold text-[14px] mb-3">Account Info</h4>
         <div className="bg-gray-50 rounded-xl p-4">
           <p className="text-gray-700 text-[12px] leading-relaxed">
-            Welcome to {brandName}'s official LINE account! Stay updated with the latest insurance plans, financial tips, and exclusive promotions. Chat with us anytime for personalized consultations.
+            {genericBranding ? t('generic.line.welcome_blurb') : `Welcome to ${brandName}'s official LINE account! Stay updated with the latest insurance plans, financial tips, and exclusive promotions. Chat with us anytime for personalized consultations.`}
           </p>
         </div>
 
@@ -104,7 +106,7 @@ export default function LineChannelFlow() {
           <div className="w-5 h-5 flex items-center justify-center text-gray-400">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10" /><line x1="2" y1="12" x2="22" y2="12" /><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" /></svg>
           </div>
-          <span className="text-[#06C755] text-[12px]">insurance.samsung.com + 1 more</span>
+          <span className="text-[#06C755] text-[12px]">{genericBranding ? `${t('generic.financial_url')} + 1 more` : 'insurance.samsung.com + 1 more'}</span>
         </div>
       </div>
 
@@ -205,17 +207,21 @@ export default function LineChannelFlow() {
             <span className="text-black/70 text-[11px] font-medium">{brandNameShort}</span>
             <div className="bg-white rounded-xl rounded-tl-sm p-3 mt-1 max-w-[240px]">
               <p className="text-black text-[12px] leading-relaxed">
-                Thank you for adding '{brandNameShort}' as a friend on LINE!
+                {genericBranding ? t('generic.line.welcome_blurb') : `Thank you for adding '${brandNameShort}' as a friend on LINE!`}
               </p>
-              <p className="text-black text-[12px] leading-relaxed mt-2">
-                You'll now receive exclusive insurance plans, financial tips, and special promotions directly in your LINE inbox.
-              </p>
-              <p className="text-black text-[12px] leading-relaxed mt-2">
-                Feel free to chat with us anytime for personalized consultations. Our team is here to help! 🤝
-              </p>
-              <p className="text-black text-[12px] leading-relaxed mt-2">
-                Welcome to {brandName}! 💙
-              </p>
+              {!genericBranding && (
+                <>
+                  <p className="text-black text-[12px] leading-relaxed mt-2">
+                    You'll now receive exclusive insurance plans, financial tips, and special promotions directly in your LINE inbox.
+                  </p>
+                  <p className="text-black text-[12px] leading-relaxed mt-2">
+                    Feel free to chat with us anytime for personalized consultations. Our team is here to help! 🤝
+                  </p>
+                  <p className="text-black text-[12px] leading-relaxed mt-2">
+                    Welcome to {brandName}! 💙
+                  </p>
+                </>
+              )}
               <p className="text-black/60 text-[10px] leading-relaxed mt-3 border-t border-black/10 pt-2">
                 ※ Messages sent during off-hours (8PM-8AM) will be delivered after 8:00 AM the next day.
               </p>
@@ -231,11 +237,11 @@ export default function LineChannelFlow() {
       {/* Bottom quick actions */}
       <div className="bg-white border-t border-gray-200 px-4 py-3 space-y-2">
         <button className="w-full text-left text-[13px] text-black py-2 px-1 flex items-center gap-2 active:bg-gray-50 rounded">
-          💼 Get a free insurance consultation
+          💼 {genericBranding ? t('generic.line.cta_consult') : 'Get a free insurance consultation'}
         </button>
         <div className="border-t border-gray-100" />
         <button className="w-full text-left text-[13px] text-black py-2 px-1 flex items-center gap-2 active:bg-gray-50 rounded">
-          Visit Samsung Life website
+          {genericBranding ? t('generic.line.cta_web') : 'Visit Samsung Life website'}
         </button>
       </div>
     </div>

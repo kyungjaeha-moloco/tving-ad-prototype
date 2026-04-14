@@ -1,7 +1,8 @@
-import { useRef } from 'react';
+import { useMemo, useRef } from 'react';
 import { ShoppingBag } from 'lucide-react';
 import { useLocale } from '../LocaleContext';
 import medihealHero from '../assets/mediheal-hero.png';
+import { GENERIC_HERO_IMAGE, resolvePromoListItems } from '../branding';
 
 interface OliveYoungPromoProps {
   onProductClick: (productId: number) => void;
@@ -29,28 +30,29 @@ export const STATIC_ITEMS = [
   { id: 6, name: { ko: '마데카 선크림', en: 'Madeca Sunscreen' }, price: { ko: '16,900원', en: '₩16,900' }, discount: '30%', img: 'https://images.unsplash.com/photo-1608248543803-ba4f8c70ae0b?w=200&h=200&fit=crop&crop=center' },
 ];
 
-const HERO_CONFIG = {
-  promo: {
-    img: 'https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=750&h=422&fit=crop&crop=center',
-  },
-  static: {
-    img: medihealHero,
-  },
-};
-
 export default function OliveYoungPromo({ onProductClick, onPromoClick, variant = 'promo', showSkip = true, showDetail = false }: OliveYoungPromoProps) {
   const scrollRef = useRef<HTMLDivElement>(null);
-  const { locale, t } = useLocale();
+  const { locale, t, genericBranding } = useLocale();
   const isPromo = variant === 'promo';
-  const hero = HERO_CONFIG[variant];
-  const items = isPromo ? PROMO_ITEMS : STATIC_ITEMS;
+  const hero = useMemo(() => {
+    if (genericBranding) {
+      return { img: GENERIC_HERO_IMAGE };
+    }
+    return variant === 'promo'
+      ? { img: 'https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=750&h=422&fit=crop&crop=center' }
+      : { img: medihealHero };
+  }, [genericBranding, variant]);
+  const items = useMemo(() => {
+    const raw = isPromo ? PROMO_ITEMS : STATIC_ITEMS;
+    return resolvePromoListItems(raw, genericBranding, locale, t);
+  }, [isPromo, genericBranding, locale, t]);
 
   return (
     <div className="relative w-full shrink-0">
       <button onClick={onPromoClick} className="relative w-full aspect-video overflow-hidden active:opacity-95 transition-opacity block">
         <img
           src={hero.img}
-          alt={isPromo ? t('product.olive_young') : t('product.mediheal')}
+          alt={isPromo ? (genericBranding ? t('generic.retailer_name') : t('product.olive_young')) : genericBranding ? t('generic.brand_name') : t('product.mediheal')}
           className="w-full h-full object-cover"
           referrerPolicy="no-referrer"
         />
@@ -69,18 +71,22 @@ export default function OliveYoungPromo({ onProductClick, onPromoClick, variant 
         {isPromo ? (
           <div className="absolute top-[34px] left-0 right-0 px-5">
             <div className="flex items-center gap-[6px] mb-2">
-              <div className="w-5 h-5 rounded-full bg-[#9bce26] flex items-center justify-center">
+              <div className={`w-5 h-5 rounded-full flex items-center justify-center ${genericBranding ? 'bg-slate-600' : 'bg-[#9bce26]'}`}>
                 <ShoppingBag size={10} className="text-white" />
               </div>
-              <span className="text-white text-[11px] font-bold">{t('product.olive_young')}</span>
+              <span className="text-white text-[11px] font-bold">{genericBranding ? t('generic.retailer_name') : t('product.olive_young')}</span>
             </div>
             <p className="text-white font-black text-[20px] leading-[1.15] tracking-tight">
-              {t('product.beauty_sale')} <span className="text-[#9bce26]">50%</span>
+              {genericBranding ? (
+                <>{t('generic.promo_hero_line')} <span className="text-[#9bce26]">50%</span></>
+              ) : (
+                <>{t('product.beauty_sale')} <span className="text-[#9bce26]">50%</span></>
+              )}
             </p>
           </div>
         ) : (
           <div className={`absolute top-0 left-0 right-0 flex items-center justify-center ${showDetail ? 'bottom-[130px]' : 'bottom-[90px]'}`}>
-            <span className="text-white text-[22px] font-black tracking-tight">{t('product.mediheal')}</span>
+            <span className="text-white text-[22px] font-black tracking-tight">{genericBranding ? t('generic.brand_name') : t('product.mediheal')}</span>
           </div>
         )}
       </button>

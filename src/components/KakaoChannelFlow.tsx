@@ -6,7 +6,7 @@ type KakaoStep = 'channel_home' | 'subscribe_popup' | 'chatroom';
 
 export default function KakaoChannelFlow() {
   const [step, setStep] = useState<KakaoStep>('channel_home');
-  const { locale } = useLocale();
+  const { locale, genericBranding, t } = useLocale();
   const isEn = locale === 'en';
 
   const StatusBar = () => (
@@ -31,7 +31,7 @@ export default function KakaoChannelFlow() {
     </div>
   );
 
-  const brandName = isEn ? 'Samsung Life' : '삼성생명';
+  const brandName = genericBranding ? t('generic.financial_short') : isEn ? 'Samsung Life' : '삼성생명';
 
   const ChannelHome = () => (
     <div className="flex flex-col h-full bg-[#111]">
@@ -68,7 +68,7 @@ export default function KakaoChannelFlow() {
               </div>
             </div>
           </div>
-          <p className="text-gray-600 text-[13px] mt-3">{isEn ? 'Your lifetime financial partner' : '고객과 함께하는 인생금융파트너'}</p>
+          <p className="text-gray-600 text-[13px] mt-3">{genericBranding ? t('generic.financial_tagline') : isEn ? 'Your lifetime financial partner' : '고객과 함께하는 인생금융파트너'}</p>
           <div className="flex gap-2 mt-3">
             <button className="px-3 py-[6px] border border-gray-300 rounded-full text-[12px] text-black flex items-center gap-1">
               📋 {isEn ? 'News' : '소식'}
@@ -95,17 +95,27 @@ export default function KakaoChannelFlow() {
         </div>
 
         <div className="px-4 grid grid-cols-2 gap-3 pb-6">
-          {(isEn ? [
-            { title: 'Is your tax refund enough this year?', sub: 'Again and again,' },
-            { title: 'Apply for Samsung Life Customer Panel 2025!', sub: '' },
-            { title: 'Apply for Samsung Life Customer Panel 2024!', sub: '' },
-            { title: 'Recruiting Samsung Life Customer Panel 2023!', sub: 'News you must check!' },
-          ] : [
-            { title: '올해 연말정산 환급, 충분하신가요?', sub: '하고 하고 또 해도,' },
-            { title: '2025년 삼성생명 고객패널에 지원해 보세요!', sub: '' },
-            { title: '2024년 삼성생명 고객패널에 지원해 보세요!', sub: '' },
-            { title: '2023 삼성생명 고객패널을 모집합니다!', sub: '이 시기에 꼭 챙겨야 할 뉴스!' },
-          ]).map((item, i) => (
+          {(genericBranding
+            ? [
+                { title: t('generic.kakao.news_a'), sub: '' },
+                { title: t('generic.kakao.news_b'), sub: '' },
+                { title: t('generic.kakao.news_a'), sub: '' },
+                { title: t('generic.kakao.news_b'), sub: '' },
+              ]
+            : isEn
+              ? [
+                  { title: 'Is your tax refund enough this year?', sub: 'Again and again,' },
+                  { title: 'Apply for Samsung Life Customer Panel 2025!', sub: '' },
+                  { title: 'Apply for Samsung Life Customer Panel 2024!', sub: '' },
+                  { title: 'Recruiting Samsung Life Customer Panel 2023!', sub: 'News you must check!' },
+                ]
+              : [
+                  { title: '올해 연말정산 환급, 충분하신가요?', sub: '하고 하고 또 해도,' },
+                  { title: '2025년 삼성생명 고객패널에 지원해 보세요!', sub: '' },
+                  { title: '2024년 삼성생명 고객패널에 지원해 보세요!', sub: '' },
+                  { title: '2023 삼성생명 고객패널을 모집합니다!', sub: '이 시기에 꼭 챙겨야 할 뉴스!' },
+                ]
+          ).map((item, i) => (
             <div key={i} className="bg-[#1c1c1c] rounded-lg overflow-hidden">
               <div className="w-full aspect-square bg-gradient-to-br from-[#f5e6d0] to-[#e8d5b8] flex items-center justify-center p-3">
                 <span className="text-[10px] text-[#6b5a3e] font-medium text-center leading-tight">{i % 2 === 1 ? (isEn ? '2,000 spots!' : '총 2천명 모집!') : '📊'}</span>
@@ -199,7 +209,9 @@ export default function KakaoChannelFlow() {
           <div>
             <span className="text-black/70 text-[11px] font-medium">{brandName}</span>
             <div className="bg-white rounded-xl rounded-tl-sm p-3 mt-1 max-w-[240px]">
-              {isEn ? (
+              {genericBranding ? (
+                <p className="text-black text-[12px] leading-relaxed">{t('generic.kakao.chat_line1')}</p>
+              ) : isEn ? (
                 <>
                   <p className="text-black text-[12px] leading-relaxed">
                     Thank you for adding the '{brandName}' channel.
@@ -256,11 +268,11 @@ export default function KakaoChannelFlow() {
 
       <div className="bg-white border-t border-gray-200 px-4 py-3 space-y-2">
         <button className="w-full text-left text-[13px] text-black py-2 px-1 flex items-center gap-2 active:bg-gray-50 rounded">
-          🍀 {isEn ? 'Meet Samsung Monimo App' : '삼성금융통합앱 모니모 만나기'}
+          🍀 {genericBranding ? t('generic.kakao.cta_app') : isEn ? 'Meet Samsung Monimo App' : '삼성금융통합앱 모니모 만나기'}
         </button>
         <div className="border-t border-gray-100" />
         <button className="w-full text-left text-[13px] text-black py-2 px-1 flex items-center gap-2 active:bg-gray-50 rounded">
-          {isEn ? 'Go to Samsung Life website' : '삼성생명 홈페이지 바로가기'}
+          {genericBranding ? t('generic.kakao.cta_site') : isEn ? 'Go to Samsung Life website' : '삼성생명 홈페이지 바로가기'}
         </button>
       </div>
     </div>

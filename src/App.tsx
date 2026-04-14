@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { useLocale } from './LocaleContext';
 import { 
   AdCategory, 
@@ -37,9 +37,15 @@ import KakaoChannelFlow from './components/KakaoChannelFlow';
 import LineChannelFlow from './components/LineChannelFlow';
 import OliveYoungPromo, { PROMO_ITEMS } from './components/OliveYoungPromo';
 import medihealHero from './assets/mediheal-hero.png';
+import type { ProductDetail } from './types';
+import {
+  buildGenericDemoUrl,
+  GENERIC_HERO_IMAGE,
+  resolveProductDetail,
+} from './branding';
 
 function OliveYoungPromoBrowser() {
-  const { t } = useLocale();
+  const { t, locale, genericBranding } = useLocale();
   const products = [
     { name: 'Moroccan Oil Treatment 100ml', nameKo: '모로칸오일 트리트먼트 100ml', price: '39,000원', priceEn: '₩39,000', original: '49,000원', originalEn: '₩49,000', discount: '20%', img: 'https://images.unsplash.com/photo-1535585209827-a15fcdbc4c2d?w=200&h=200&fit=crop' },
     { name: 'La Beaute Hair Essence Oil', nameKo: '라보떼 헤어 에센스 오일', price: '18,500원', priceEn: '₩18,500', original: '25,000원', originalEn: '₩25,000', discount: '26%', img: 'https://images.unsplash.com/photo-1519735777090-ec97162dc266?w=200&h=200&fit=crop' },
@@ -49,25 +55,33 @@ function OliveYoungPromoBrowser() {
     { name: 'Illiyoon Ceramide Body Lotion', nameKo: '일리윤 세라마이드 바디로션', price: '13,500원', priceEn: '₩13,500', original: '19,000원', originalEn: '₩19,000', discount: '29%', img: 'https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?w=200&h=200&fit=crop' },
   ];
 
-  const isEn = useLocale().locale === 'en';
+  const isEn = locale === 'en';
+  const resolvedProducts = genericBranding
+    ? products.map((p, i) => ({
+        ...p,
+        name: `${t('generic.item_name_prefix')} ${i + 1}`,
+        nameKo: `${t('generic.item_name_prefix')} ${i + 1}`,
+        img: 'https://images.unsplash.com/photo-1556228578-0d85b1a4d571?w=200&h=200&fit=crop',
+      }))
+    : products;
 
   return (
     <div className="bg-white min-h-full">
       <img
-        src="https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=750&h=400&fit=crop"
-        alt={t('product.olive_young')}
+        src={genericBranding ? GENERIC_HERO_IMAGE : 'https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=750&h=400&fit=crop'}
+        alt={genericBranding ? t('generic.retailer_name') : t('product.olive_young')}
         className="w-full aspect-[16/9] object-cover"
         referrerPolicy="no-referrer"
       />
       <div className="px-4 py-4">
         <div className="flex items-center gap-2 mb-1">
-          <div className="w-7 h-7 rounded-full bg-[#9bce26] flex items-center justify-center">
-            <span className="text-white text-[10px] font-black">OY</span>
+          <div className={`w-7 h-7 rounded-full flex items-center justify-center ${genericBranding ? 'bg-slate-600' : 'bg-[#9bce26]'}`}>
+            <span className="text-white text-[10px] font-black">{genericBranding ? t('generic.retailer_badge') : 'OY'}</span>
           </div>
-          <span className="text-black font-bold text-[14px]">{t('product.olive_young')}</span>
+          <span className="text-black font-bold text-[14px]">{genericBranding ? t('generic.retailer_name') : t('product.olive_young')}</span>
         </div>
-        <h2 className="text-black font-extrabold text-[20px] leading-tight mt-2">{t('product.beauty_honey_sale')}</h2>
-        <p className="text-gray-500 text-[13px] mt-1">{t('product.up_to_50')}</p>
+        <h2 className="text-black font-extrabold text-[20px] leading-tight mt-2">{genericBranding ? t('generic.promo_headline') : t('product.beauty_honey_sale')}</h2>
+        <p className="text-gray-500 text-[13px] mt-1">{genericBranding ? t('generic.up_to_line') : t('product.up_to_50')}</p>
         <p className="text-gray-400 text-[11px] mt-1">2026.03.20 ~ 2026.04.10</p>
       </div>
       <div className="h-[1px] bg-gray-100 mx-4" />
@@ -75,7 +89,7 @@ function OliveYoungPromoBrowser() {
         <h3 className="text-black font-bold text-[16px]">{t('product.promo_products')}</h3>
       </div>
       <div className="grid grid-cols-2 gap-3 px-4 pb-8">
-        {products.map((p, i) => (
+        {resolvedProducts.map((p, i) => (
           <div key={i} className="border border-gray-100 rounded-xl overflow-hidden">
             <div className="aspect-square bg-gray-50">
               <img src={p.img} alt={isEn ? p.name : p.nameKo} className="w-full h-full object-cover" referrerPolicy="no-referrer" />
@@ -95,16 +109,6 @@ function OliveYoungPromoBrowser() {
   );
 }
 
-interface ProductDetail {
-  brand: { ko: string; en: string };
-  name: { ko: string; en: string };
-  price: { ko: string; en: string };
-  original: { ko: string; en: string };
-  discount: string;
-  desc: { ko: string; en: string };
-  img: string;
-}
-
 const PRODUCT_DETAILS: Record<number, ProductDetail> = {
   1: { brand: { ko: '메디힐', en: 'Mediheal' }, name: { ko: '마데카소사이드 흔적 리페어 세럼 50ml', en: 'Madecassoside Scar Repair Serum 50ml' }, price: { ko: '19,800원', en: '₩19,800' }, original: { ko: '28,000원', en: '₩28,000' }, discount: '29%', desc: { ko: '마데카소사이드 성분이 피부 흔적을 집중 케어하는 더마 세럼.', en: 'A derma serum with madecassoside for intensive scar care.' }, img: 'https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=400&h=400&fit=crop' },
   2: { brand: { ko: '메디힐', en: 'Mediheal' }, name: { ko: 'N.M.F 아쿠아링 수분 패드 60매', en: 'N.M.F Aquaring Moisture Pad 60pcs' }, price: { ko: '14,500원', en: '₩14,500' }, original: { ko: '20,000원', en: '₩20,000' }, discount: '28%', desc: { ko: 'N.M.F 보습 인자가 피부에 즉각적인 수분감을 부여하는 패드.', en: 'Daily moisture pads with N.M.F hydrating factor.' }, img: 'https://images.unsplash.com/photo-1611930022073-b7a4ba5fcccd?w=400&h=400&fit=crop' },
@@ -121,9 +125,10 @@ const PRODUCT_DETAILS: Record<number, ProductDetail> = {
 };
 
 function OliveYoungProductPage({ productId }: { productId: number }) {
-  const { locale, t } = useLocale();
-  const product = PRODUCT_DETAILS[productId];
-  if (!product) return null;
+  const { locale, t, genericBranding } = useLocale();
+  const base = PRODUCT_DETAILS[productId];
+  if (!base) return null;
+  const product = resolveProductDetail(productId, base, genericBranding, locale, t);
 
   return (
     <div className="bg-white min-h-full">
@@ -150,7 +155,7 @@ function OliveYoungProductPage({ productId }: { productId: number }) {
 }
 
 export default function App() {
-  const { locale, setLocale, t } = useLocale();
+  const { locale, setLocale, t, genericBranding, setGenericBranding } = useLocale();
   const [category, setCategory] = useState<AdCategory>('leadgen');
   const [leadGenSubtype, setLeadGenSubtype] = useState<LeadGenSubtype>('manual');
   const [productSubtype, setProductSubtype] = useState<ProductSubtype>('promo_list');
@@ -199,29 +204,32 @@ export default function App() {
   const isProduct = category === 'product';
   const [selectedProductId, setSelectedProductId] = useState<number | null>(null);
 
-  const adContent = isMessaging
-    ? {
-        videoImg: 'https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=750&h=422&fit=crop&crop=center',
-        videoAlt: t('ad.insurance.video_alt'),
-        advertiser: t('ad.insurance.advertiser'),
-        bannerImg: 'https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=700&h=200&fit=crop&crop=center',
-        bannerAlt: t('ad.insurance.video_alt'),
-        bannerTag: t('ad.insurance.banner_tag'),
-        bannerTitle: t('ad.insurance.banner_title'),
-        bannerSub: t('ad.insurance.banner_sub'),
-        outstreamAlt: t('ad.insurance.video_alt'),
-      }
-    : {
-        videoImg: 'https://images.unsplash.com/photo-1603584173870-7f23fdae1b7a?w=750&h=422&fit=crop&crop=center',
-        videoAlt: t('ad.car.video_alt'),
-        advertiser: t('ad.car.advertiser'),
-        bannerImg: 'https://images.unsplash.com/photo-1603584173870-7f23fdae1b7a?w=700&h=200&fit=crop&crop=center',
-        bannerAlt: t('ad.car.video_alt'),
-        bannerTag: t('ad.car.banner_tag'),
-        bannerTitle: t('ad.car.banner_title'),
-        bannerSub: t('ad.car.banner_sub'),
-        outstreamAlt: t('ad.car.video_alt'),
-      };
+  const adContent = useMemo(() => {
+    const g = genericBranding;
+    return isMessaging
+      ? {
+          videoImg: 'https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=750&h=422&fit=crop&crop=center',
+          videoAlt: t('ad.insurance.video_alt'),
+          advertiser: g ? t('generic.ad.insurance.advertiser') : t('ad.insurance.advertiser'),
+          bannerImg: 'https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=700&h=200&fit=crop&crop=center',
+          bannerAlt: t('ad.insurance.video_alt'),
+          bannerTag: t('ad.insurance.banner_tag'),
+          bannerTitle: g ? t('generic.ad.insurance.banner_title') : t('ad.insurance.banner_title'),
+          bannerSub: g ? t('generic.ad.insurance.banner_sub') : t('ad.insurance.banner_sub'),
+          outstreamAlt: t('ad.insurance.video_alt'),
+        }
+      : {
+          videoImg: 'https://images.unsplash.com/photo-1603584173870-7f23fdae1b7a?w=750&h=422&fit=crop&crop=center',
+          videoAlt: t('ad.car.video_alt'),
+          advertiser: g ? t('generic.ad.car.advertiser') : t('ad.car.advertiser'),
+          bannerImg: 'https://images.unsplash.com/photo-1603584173870-7f23fdae1b7a?w=700&h=200&fit=crop&crop=center',
+          bannerAlt: t('ad.car.video_alt'),
+          bannerTag: t('ad.car.banner_tag'),
+          bannerTitle: g ? t('generic.ad.car.banner_title') : t('ad.car.banner_title'),
+          bannerSub: g ? t('generic.ad.car.banner_sub') : t('ad.car.banner_sub'),
+          outstreamAlt: t('ad.car.video_alt'),
+        };
+  }, [isMessaging, genericBranding, t]);
 
   const ActionButtons = () => (
     <div className="flex gap-2 w-full">
@@ -291,14 +299,29 @@ export default function App() {
               </button>
             </div>
 
-            <button
-              onClick={() => setLocale(locale === 'ko' ? 'en' : 'ko')}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-white/10 text-[11px] font-bold transition-all hover:border-white/30 bg-[#1a1a1a]"
-            >
-              <span className={locale === 'ko' ? 'text-white' : 'text-gray-500'}>KR</span>
-              <span className="text-gray-600">/</span>
-              <span className={locale === 'en' ? 'text-white' : 'text-gray-500'}>EN</span>
-            </button>
+            <div className="flex items-center gap-3">
+              <label className="flex items-center gap-2 cursor-pointer select-none group">
+                <input
+                  type="checkbox"
+                  checked={genericBranding}
+                  onChange={(e) => setGenericBranding(e.target.checked)}
+                  className="rounded border-white/25 bg-[#1a1a1a] text-red-600 focus:ring-2 focus:ring-red-500/30"
+                  aria-label={t('settings.generic_brands_aria')}
+                />
+                <span className="text-[10px] font-bold text-gray-400 group-hover:text-gray-300 max-w-[100px] leading-tight">
+                  {t('settings.generic_brands')}
+                </span>
+              </label>
+              <button
+                type="button"
+                onClick={() => setLocale(locale === 'ko' ? 'en' : 'ko')}
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-white/10 text-[11px] font-bold transition-all hover:border-white/30 bg-[#1a1a1a]"
+              >
+                <span className={locale === 'ko' ? 'text-white' : 'text-gray-500'}>KR</span>
+                <span className="text-gray-600">/</span>
+                <span className={locale === 'en' ? 'text-white' : 'text-gray-500'}>EN</span>
+              </button>
+            </div>
           </div>
 
           <div className="flex items-center gap-6 flex-wrap">
@@ -431,11 +454,18 @@ export default function App() {
 
               {/* Ranking Section */}
               <div className="pl-3 pt-2 pb-3 flex gap-[10px] overflow-x-auto scrollbar-hide">
-                {[
-                  { rank: 1, title: 'YTN', sub: t('ranking.sub_newsquare'), pct: '30.6%', color: '#0072bc', logo: 'YTN', img: 'https://images.unsplash.com/photo-1495020689067-958852a7765e?w=300&h=170&fit=crop' },
-                  { rank: 2, title: 'MBC', sub: t('ranking.sub_mudo'), pct: '10.4%', color: '#c8102e', logo: 'MBC', img: 'https://images.unsplash.com/photo-1522869635100-9f4c5e86aa37?w=300&h=170&fit=crop' },
-                  { rank: 3, title: locale === 'ko' ? '연합뉴스' : 'Yonhap', sub: t('ranking.sub_yonhap'), pct: '8.3%', color: '#e85d00', logo: locale === 'ko' ? '연합' : 'YH', img: 'https://images.unsplash.com/photo-1504711434969-e33886168d6c?w=300&h=170&fit=crop' },
-                ].map((item) => (
+                {(genericBranding
+                  ? [
+                      { rank: 1, title: t('generic.channel_title_1'), sub: t('generic.ranking_sub_1'), pct: '30.6%', color: '#0072bc', logo: t('generic.channel_logo_1'), img: 'https://images.unsplash.com/photo-1495020689067-958852a7765e?w=300&h=170&fit=crop' },
+                      { rank: 2, title: t('generic.channel_title_2'), sub: t('generic.ranking_sub_2'), pct: '10.4%', color: '#c8102e', logo: t('generic.channel_logo_2'), img: 'https://images.unsplash.com/photo-1522869635100-9f4c5e86aa37?w=300&h=170&fit=crop' },
+                      { rank: 3, title: t('generic.channel_title_3'), sub: t('generic.ranking_sub_3'), pct: '8.3%', color: '#e85d00', logo: t('generic.channel_logo_3'), img: 'https://images.unsplash.com/photo-1504711434969-e33886168d6c?w=300&h=170&fit=crop' },
+                    ]
+                  : [
+                      { rank: 1, title: 'YTN', sub: t('ranking.sub_newsquare'), pct: '30.6%', color: '#0072bc', logo: 'YTN', img: 'https://images.unsplash.com/photo-1495020689067-958852a7765e?w=300&h=170&fit=crop' },
+                      { rank: 2, title: 'MBC', sub: t('ranking.sub_mudo'), pct: '10.4%', color: '#c8102e', logo: 'MBC', img: 'https://images.unsplash.com/photo-1522869635100-9f4c5e86aa37?w=300&h=170&fit=crop' },
+                      { rank: 3, title: locale === 'ko' ? '연합뉴스' : 'Yonhap', sub: t('ranking.sub_yonhap'), pct: '8.3%', color: '#e85d00', logo: locale === 'ko' ? '연합' : 'YH', img: 'https://images.unsplash.com/photo-1504711434969-e33886168d6c?w=300&h=170&fit=crop' },
+                    ]
+                ).map((item) => (
                   <div key={item.rank} className="shrink-0 w-[150px]">
                     <div className="relative w-full aspect-[16/10] rounded-lg overflow-hidden bg-[#111]">
                       <img src={item.img} alt={item.title} className="w-full h-full object-cover" referrerPolicy="no-referrer" />
@@ -503,11 +533,18 @@ export default function App() {
               </div>
 
               <div className="pl-4 pb-4 flex gap-[10px] overflow-x-auto scrollbar-hide">
-                {[
-                  { title: t('binge.samsiseki5'), ep: `7${t('binge.ep')}`, img: 'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=280&h=380&fit=crop' },
-                  { title: t('binge.hospital2'), ep: `8${t('binge.ep')}`, img: 'https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=280&h=380&fit=crop' },
-                  { title: t('binge.samsiseki_gochang'), ep: `8${t('binge.ep')}`, img: 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=280&h=380&fit=crop' },
-                ].map((item, i) => (
+                {(genericBranding
+                  ? [
+                      { title: t('generic.binge_1'), ep: `7${t('binge.ep')}`, img: 'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=280&h=380&fit=crop' },
+                      { title: t('generic.binge_2'), ep: `8${t('binge.ep')}`, img: 'https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=280&h=380&fit=crop' },
+                      { title: t('generic.binge_3'), ep: `8${t('binge.ep')}`, img: 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=280&h=380&fit=crop' },
+                    ]
+                  : [
+                      { title: t('binge.samsiseki5'), ep: `7${t('binge.ep')}`, img: 'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=280&h=380&fit=crop' },
+                      { title: t('binge.hospital2'), ep: `8${t('binge.ep')}`, img: 'https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=280&h=380&fit=crop' },
+                      { title: t('binge.samsiseki_gochang'), ep: `8${t('binge.ep')}`, img: 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=280&h=380&fit=crop' },
+                    ]
+                ).map((item, i) => (
                   <div key={i} className="shrink-0 w-[120px]">
                     <div className="w-full aspect-[3/4] rounded-lg overflow-hidden bg-[#1a1a1a]">
                       <img src={item.img} alt={item.title} className="w-full h-full object-cover" referrerPolicy="no-referrer" />
@@ -584,7 +621,7 @@ export default function App() {
 
               {/* ── Title ── */}
               <div className="px-4 pt-4 pb-1">
-                <h2 className="text-white text-[18px] font-bold leading-snug">{t('content.title')}</h2>
+                <h2 className="text-white text-[18px] font-bold leading-snug">{genericBranding ? t('generic.content_program') : t('content.title')}</h2>
                 <p className="text-gray-500 text-[13px] mt-[2px]">{t('content.time')}</p>
               </div>
 
@@ -605,9 +642,9 @@ export default function App() {
               <div className="px-4 py-2 flex items-center justify-between">
                 <div className="flex items-center gap-3">
                   <div className="w-[42px] h-[42px] rounded-full bg-[#0072bc] flex items-center justify-center">
-                    <span className="text-white font-extrabold text-[11px]">YTN</span>
+                    <span className="text-white font-extrabold text-[11px]">{genericBranding ? t('generic.channel_logo_1') : 'YTN'}</span>
                   </div>
-                  <span className="text-white font-bold text-[16px]">YTN</span>
+                  <span className="text-white font-bold text-[16px]">{genericBranding ? t('generic.channel_title_1') : 'YTN'}</span>
                 </div>
                 <Star size={24} className="text-gray-600" />
               </div>
@@ -619,9 +656,12 @@ export default function App() {
                     {/* Background image */}
                     <div className="absolute inset-0">
                       <img
-                        src={isStaticList
-                          ? medihealHero
-                          : 'https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=750&h=400&fit=crop&crop=center'
+                        src={
+                          genericBranding
+                            ? GENERIC_HERO_IMAGE
+                            : isStaticList
+                              ? medihealHero
+                              : 'https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=750&h=400&fit=crop&crop=center'
                         }
                         alt="" className="w-full h-full object-cover" referrerPolicy="no-referrer"
                       />
@@ -637,8 +677,24 @@ export default function App() {
                     >
                       
                       <div className={`min-w-0 ${isPromoList ? 'text-center' : 'flex-1 text-left'}`}>
-                        <p className="text-white text-[13px] font-bold leading-tight">{isStaticList ? t('product.mediheal_in_oy') : `${t('product.beauty_sale')} 50%`}</p>
-                        <p className="text-white/40 text-[10px]">{isStaticList ? t('product.derma_best') : t('product.oy_exclusive')}</p>
+                        <p className="text-white text-[13px] font-bold leading-tight">
+                          {isStaticList
+                            ? genericBranding
+                              ? t('generic.mediheal_in_store')
+                              : t('product.mediheal_in_oy')
+                            : genericBranding
+                              ? t('generic.promo_sale_with_pct')
+                              : `${t('product.beauty_sale')} 50%`}
+                        </p>
+                        <p className="text-white/40 text-[10px]">
+                          {isStaticList
+                            ? genericBranding
+                              ? t('generic.derma_sub')
+                              : t('product.derma_best')
+                            : genericBranding
+                              ? t('generic.promo_banner_sub')
+                              : t('product.oy_exclusive')}
+                        </p>
                       </div>
                       
                     </button>
@@ -651,6 +707,7 @@ export default function App() {
                       ).map(id => {
                         const p = PRODUCT_DETAILS[id];
                         if (!p) return null;
+                        const row = resolveProductDetail(id, p, genericBranding, locale, t);
                         return (
                           <button
                             key={id}
@@ -658,9 +715,9 @@ export default function App() {
                             className="shrink-0 w-[72px] text-left active:scale-[0.95] transition-transform"
                           >
                             <div className="w-[72px] h-[72px] rounded-[8px] overflow-hidden bg-white/10 ring-1 ring-white/10">
-                              <img src={p.img} alt={p.name[locale]} className="w-full h-full object-cover" referrerPolicy="no-referrer" />
+                              <img src={row.img} alt={row.name[locale]} className="w-full h-full object-cover" referrerPolicy="no-referrer" />
                             </div>
-                            <p className="text-white/60 text-[9px] font-medium mt-[3px] leading-tight line-clamp-1 text-center">{p.name[locale].split(' ').slice(0, 2).join(' ')}</p>
+                            <p className="text-white/60 text-[9px] font-medium mt-[3px] leading-tight line-clamp-1 text-center">{row.name[locale].split(' ').slice(0, 2).join(' ')}</p>
                           </button>
                         );
                       })}
@@ -708,12 +765,20 @@ export default function App() {
 
               {/* ── Channel List ── */}
               <div className="px-4 pt-3 space-y-[14px] pb-36">
-                {[
-                  { title: t('content.title'), time: '13:50 ~ 15:50', logo: 'YTN', color: '#0072bc' },
-                  { title: t('channel.mudo'), time: '14:18 ~ 15:37', logo: 'MBC', color: '#c8102e' },
-                  { title: t('channel.yonhap'), time: '13:40 ~ 15:10', logo: locale === 'ko' ? '연합뉴스TV' : 'Yonhap TV', color: '#e85d00' },
-                  { title: t('channel.conan'), time: '14:29 ~ 14:50', logo: 'ANIMAX', color: '#00b4d8' },
-                ].map((item, i) => (
+                {(genericBranding
+                  ? [
+                      { title: t('generic.channel_title_1'), time: '13:50 ~ 15:50', logo: t('generic.channel_logo_1'), color: '#0072bc' },
+                      { title: t('generic.channel_title_2'), time: '14:18 ~ 15:37', logo: t('generic.channel_logo_2'), color: '#c8102e' },
+                      { title: t('generic.channel_title_3'), time: '13:40 ~ 15:10', logo: t('generic.channel_logo_3'), color: '#e85d00' },
+                      { title: t('generic.channel_title_4'), time: '14:29 ~ 14:50', logo: t('generic.channel_logo_4'), color: '#00b4d8' },
+                    ]
+                  : [
+                      { title: t('content.title'), time: '13:50 ~ 15:50', logo: 'YTN', color: '#0072bc' },
+                      { title: t('channel.mudo'), time: '14:18 ~ 15:37', logo: 'MBC', color: '#c8102e' },
+                      { title: t('channel.yonhap'), time: '13:40 ~ 15:10', logo: locale === 'ko' ? '연합뉴스TV' : 'Yonhap TV', color: '#e85d00' },
+                      { title: t('channel.conan'), time: '14:29 ~ 14:50', logo: 'ANIMAX', color: '#00b4d8' },
+                    ]
+                ).map((item, i) => (
                   <div key={i} className="flex gap-3 items-center">
                     <div className="relative w-[124px] aspect-video rounded-lg overflow-hidden shrink-0">
                       <div className="absolute inset-0 flex items-center justify-center" style={{ backgroundColor: item.color }}>
@@ -741,13 +806,15 @@ export default function App() {
             isOpen={isInAppBrowserOpen}
             onClose={() => { setIsInAppBrowserOpen(false); setSelectedProductId(null); }}
             url={isProduct
-              ? selectedProductId
-                ? isStaticList
-                  ? `https://www.oliveyoung.co.kr/store/goods/${selectedProductId}`
-                  : `https://www.oliveyoung.co.kr/product/${selectedProductId}`
-                : isStaticList
-                  ? 'https://www.oliveyoung.co.kr/store/brand/mediheal'
-                  : 'https://www.oliveyoung.co.kr/store/planshop'
+              ? genericBranding
+                ? buildGenericDemoUrl(selectedProductId, isStaticList)
+                : selectedProductId
+                  ? isStaticList
+                    ? `https://www.oliveyoung.co.kr/store/goods/${selectedProductId}`
+                    : `https://www.oliveyoung.co.kr/product/${selectedProductId}`
+                  : isStaticList
+                    ? 'https://www.oliveyoung.co.kr/store/brand/mediheal'
+                    : 'https://www.oliveyoung.co.kr/store/planshop'
               : 'https://tving.com/ads'
             }
           >
