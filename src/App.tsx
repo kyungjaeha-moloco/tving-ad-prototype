@@ -40,7 +40,12 @@ import medihealHero from './assets/mediheal-hero.png';
 import type { ProductDetail } from './types';
 import {
   buildGenericDemoUrl,
+  GENERIC_AD_BANNER_STRIP,
+  GENERIC_AD_VIDEO_STILL,
+  GENERIC_BINGE_POSTER,
   GENERIC_HERO_IMAGE,
+  GENERIC_PRODUCT_IMAGE,
+  GENERIC_RANKING_THUMB,
   resolveProductDetail,
 } from './branding';
 
@@ -61,7 +66,7 @@ function OliveYoungPromoBrowser() {
         ...p,
         name: `${t('generic.item_name_prefix')} ${i + 1}`,
         nameKo: `${t('generic.item_name_prefix')} ${i + 1}`,
-        img: 'https://images.unsplash.com/photo-1556228578-0d85b1a4d571?w=200&h=200&fit=crop',
+        img: GENERIC_PRODUCT_IMAGE,
       }))
     : products;
 
@@ -208,10 +213,10 @@ export default function App() {
     const g = genericBranding;
     return isMessaging
       ? {
-          videoImg: 'https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=750&h=422&fit=crop&crop=center',
+          videoImg: g ? GENERIC_AD_VIDEO_STILL : 'https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=750&h=422&fit=crop&crop=center',
           videoAlt: t('ad.insurance.video_alt'),
           advertiser: g ? t('generic.ad.insurance.advertiser') : t('ad.insurance.advertiser'),
-          bannerImg: 'https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=700&h=200&fit=crop&crop=center',
+          bannerImg: g ? GENERIC_AD_BANNER_STRIP : 'https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=700&h=200&fit=crop&crop=center',
           bannerAlt: t('ad.insurance.video_alt'),
           bannerTag: t('ad.insurance.banner_tag'),
           bannerTitle: g ? t('generic.ad.insurance.banner_title') : t('ad.insurance.banner_title'),
@@ -219,10 +224,10 @@ export default function App() {
           outstreamAlt: t('ad.insurance.video_alt'),
         }
       : {
-          videoImg: 'https://images.unsplash.com/photo-1603584173870-7f23fdae1b7a?w=750&h=422&fit=crop&crop=center',
+          videoImg: g ? GENERIC_AD_VIDEO_STILL : 'https://images.unsplash.com/photo-1603584173870-7f23fdae1b7a?w=750&h=422&fit=crop&crop=center',
           videoAlt: t('ad.car.video_alt'),
           advertiser: g ? t('generic.ad.car.advertiser') : t('ad.car.advertiser'),
-          bannerImg: 'https://images.unsplash.com/photo-1603584173870-7f23fdae1b7a?w=700&h=200&fit=crop&crop=center',
+          bannerImg: g ? GENERIC_AD_BANNER_STRIP : 'https://images.unsplash.com/photo-1603584173870-7f23fdae1b7a?w=700&h=200&fit=crop&crop=center',
           bannerAlt: t('ad.car.video_alt'),
           bannerTag: t('ad.car.banner_tag'),
           bannerTitle: g ? t('generic.ad.car.banner_title') : t('ad.car.banner_title'),
@@ -456,9 +461,9 @@ export default function App() {
               <div className="pl-3 pt-2 pb-3 flex gap-[10px] overflow-x-auto scrollbar-hide">
                 {(genericBranding
                   ? [
-                      { rank: 1, title: t('generic.channel_title_1'), sub: t('generic.ranking_sub_1'), pct: '30.6%', color: '#0072bc', logo: t('generic.channel_logo_1'), img: 'https://images.unsplash.com/photo-1495020689067-958852a7765e?w=300&h=170&fit=crop' },
-                      { rank: 2, title: t('generic.channel_title_2'), sub: t('generic.ranking_sub_2'), pct: '10.4%', color: '#c8102e', logo: t('generic.channel_logo_2'), img: 'https://images.unsplash.com/photo-1522869635100-9f4c5e86aa37?w=300&h=170&fit=crop' },
-                      { rank: 3, title: t('generic.channel_title_3'), sub: t('generic.ranking_sub_3'), pct: '8.3%', color: '#e85d00', logo: t('generic.channel_logo_3'), img: 'https://images.unsplash.com/photo-1504711434969-e33886168d6c?w=300&h=170&fit=crop' },
+                      { rank: 1, title: t('generic.channel_title_1'), sub: t('generic.ranking_sub_1'), pct: '30.6%', color: '#0072bc', logo: t('generic.channel_logo_1'), img: GENERIC_RANKING_THUMB },
+                      { rank: 2, title: t('generic.channel_title_2'), sub: t('generic.ranking_sub_2'), pct: '10.4%', color: '#c8102e', logo: t('generic.channel_logo_2'), img: GENERIC_RANKING_THUMB },
+                      { rank: 3, title: t('generic.channel_title_3'), sub: t('generic.ranking_sub_3'), pct: '8.3%', color: '#e85d00', logo: t('generic.channel_logo_3'), img: GENERIC_RANKING_THUMB },
                     ]
                   : [
                       { rank: 1, title: 'YTN', sub: t('ranking.sub_newsquare'), pct: '30.6%', color: '#0072bc', logo: 'YTN', img: 'https://images.unsplash.com/photo-1495020689067-958852a7765e?w=300&h=170&fit=crop' },
@@ -535,9 +540,9 @@ export default function App() {
               <div className="pl-4 pb-4 flex gap-[10px] overflow-x-auto scrollbar-hide">
                 {(genericBranding
                   ? [
-                      { title: t('generic.binge_1'), ep: `7${t('binge.ep')}`, img: 'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=280&h=380&fit=crop' },
-                      { title: t('generic.binge_2'), ep: `8${t('binge.ep')}`, img: 'https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=280&h=380&fit=crop' },
-                      { title: t('generic.binge_3'), ep: `8${t('binge.ep')}`, img: 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=280&h=380&fit=crop' },
+                      { title: t('generic.binge_1'), ep: `7${t('binge.ep')}`, img: GENERIC_BINGE_POSTER },
+                      { title: t('generic.binge_2'), ep: `8${t('binge.ep')}`, img: GENERIC_BINGE_POSTER },
+                      { title: t('generic.binge_3'), ep: `8${t('binge.ep')}`, img: GENERIC_BINGE_POSTER },
                     ]
                   : [
                       { title: t('binge.samsiseki5'), ep: `7${t('binge.ep')}`, img: 'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=280&h=380&fit=crop' },

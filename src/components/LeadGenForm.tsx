@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { CheckCircle } from 'lucide-react';
 import { useLocale } from '../LocaleContext';
+import { GENERIC_LEADGEN_HEADER } from '../branding';
 
 const MOCK_USER = { name: '하경제', phone: '010-1234-5678', car: 'EV6 GT-Line' };
 
@@ -53,9 +54,12 @@ export default function LeadGenForm({ onSubmit, variant = 'car' }: LeadGenFormPr
     <div className="space-y-4">
       <div className="relative -mx-6 -mt-6 h-[120px] overflow-hidden">
         <img
-          src={isCar
-            ? 'https://picsum.photos/seed/luxury_suv_ev/800/400'
-            : 'https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=800&h=400&fit=crop'
+          src={
+            genericBranding
+              ? GENERIC_LEADGEN_HEADER
+              : isCar
+                ? 'https://picsum.photos/seed/luxury_suv_ev/800/400'
+                : 'https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=800&h=400&fit=crop'
           }
           alt={isCar ? (genericBranding ? t('generic.form.car.title') : t('form.car.title')) : genericBranding ? t('generic.form.insurance.title') : t('form.insurance.title')}
           className="w-full h-full object-cover"
