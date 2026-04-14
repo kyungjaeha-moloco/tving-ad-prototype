@@ -1,9 +1,10 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { CheckCircle } from 'lucide-react';
 import { useLocale } from '../LocaleContext';
+import { t as translate } from '../i18n';
 
 const TVING_RED = '#FF0015';
-const MOCK_USER = { name: '하경제', phone: '010-1234-5678', car: 'EV6 GT-Line' };
+const MOCK_USER = { phone: '010-1234-5678', car: 'EV6 GT-Line' };
 
 interface NativeLeadGenFormProps {
   onSubmit: () => void;
@@ -11,12 +12,16 @@ interface NativeLeadGenFormProps {
 }
 
 export default function NativeLeadGenForm({ onSubmit, variant = 'car' }: NativeLeadGenFormProps) {
-  const { t, genericBranding } = useLocale();
+  const { t, genericBranding, locale } = useLocale();
   const [submitted, setSubmitted] = useState(false);
   const [agreed, setAgreed] = useState(false);
-  const [name, setName] = useState(MOCK_USER.name);
+  const [name, setName] = useState(() => translate('native.mock_name', locale));
   const [phone, setPhone] = useState(MOCK_USER.phone);
   const [car, setCar] = useState(MOCK_USER.car);
+
+  useEffect(() => {
+    setName(translate('native.mock_name', locale));
+  }, [locale]);
 
   const isCar = variant === 'car';
 
@@ -72,10 +77,10 @@ export default function NativeLeadGenForm({ onSubmit, variant = 'car' }: NativeL
                 <label className="text-[13px] text-gray-400 w-[60px] shrink-0">{t('native.car_label')}</label>
                 <select value={car} onChange={(e) => setCar(e.target.value)} className="w-full bg-transparent text-[14px] text-white focus:outline-none py-[10px] appearance-none" required>
                   <option value="" className="bg-[#1e1e1e]">{t('native.select')}</option>
-                  <option className="bg-[#1e1e1e]">{genericBranding ? 'Demo EV Standard' : 'EV6 Standard'}</option>
-                  <option className="bg-[#1e1e1e]">{genericBranding ? 'Demo EV Long Range' : 'EV6 Long Range'}</option>
-                  <option className="bg-[#1e1e1e]">{genericBranding ? 'Demo EV Sport' : 'EV6 GT-Line'}</option>
-                  <option className="bg-[#1e1e1e]">{genericBranding ? 'Demo EV Performance' : 'EV6 GT'}</option>
+                  <option className="bg-[#1e1e1e]">{genericBranding ? 'EV Standard' : 'EV6 Standard'}</option>
+                  <option className="bg-[#1e1e1e]">{genericBranding ? 'EV Long Range' : 'EV6 Long Range'}</option>
+                  <option className="bg-[#1e1e1e]">{genericBranding ? 'EV Sport' : 'EV6 GT-Line'}</option>
+                  <option className="bg-[#1e1e1e]">{genericBranding ? 'EV Performance' : 'EV6 GT'}</option>
                 </select>
               </div>
               <div className="flex items-center px-4">

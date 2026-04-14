@@ -26,7 +26,7 @@ import {
   Search,
   FolderOpen,
   Wifi,
-  ShoppingBag
+  ShoppingBag,
 } from 'lucide-react';
 import BottomSheet from './components/BottomSheet';
 import InAppBrowser from './components/InAppBrowser';
@@ -39,13 +39,17 @@ import OliveYoungPromo, { PROMO_ITEMS } from './components/OliveYoungPromo';
 import medihealHero from './assets/mediheal-hero.png';
 import type { ProductDetail } from './types';
 import {
-  buildGenericDemoUrl,
-  GENERIC_AD_BANNER_STRIP,
-  GENERIC_AD_VIDEO_STILL,
-  GENERIC_BINGE_POSTER,
+  buildGenericPreviewUrl,
+  CAR_AD_BANNER_STRIP,
+  CAR_AD_VIDEO_STILL,
+  INSURANCE_AD_BANNER_STRIP,
+  INSURANCE_AD_VIDEO_STILL,
+  GENERIC_BINGE_POSTERS,
+  GENERIC_CHANNEL_THUMBS,
   GENERIC_HERO_IMAGE,
-  GENERIC_PRODUCT_IMAGE,
-  GENERIC_RANKING_THUMB,
+  GENERIC_PRODUCT_IMAGES,
+  GENERIC_RANKING_THUMBS,
+  genericFictitiousProductName,
   resolveProductDetail,
 } from './branding';
 
@@ -62,12 +66,15 @@ function OliveYoungPromoBrowser() {
 
   const isEn = locale === 'en';
   const resolvedProducts = genericBranding
-    ? products.map((p, i) => ({
-        ...p,
-        name: `${t('generic.item_name_prefix')} ${i + 1}`,
-        nameKo: `${t('generic.item_name_prefix')} ${i + 1}`,
-        img: GENERIC_PRODUCT_IMAGE,
-      }))
+    ? products.map((p, i) => {
+        const nm = genericFictitiousProductName(i + 11);
+        return {
+          ...p,
+          name: nm.en,
+          nameKo: nm.ko,
+          img: GENERIC_PRODUCT_IMAGES[i],
+        };
+      })
     : products;
 
   return (
@@ -213,10 +220,14 @@ export default function App() {
     const g = genericBranding;
     return isMessaging
       ? {
-          videoImg: g ? GENERIC_AD_VIDEO_STILL : 'https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=750&h=422&fit=crop&crop=center',
+          videoImg: g
+            ? INSURANCE_AD_VIDEO_STILL
+            : 'https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=750&h=422&fit=crop&crop=center',
           videoAlt: t('ad.insurance.video_alt'),
           advertiser: g ? t('generic.ad.insurance.advertiser') : t('ad.insurance.advertiser'),
-          bannerImg: g ? GENERIC_AD_BANNER_STRIP : 'https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=700&h=200&fit=crop&crop=center',
+          bannerImg: g
+            ? INSURANCE_AD_BANNER_STRIP
+            : 'https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=700&h=200&fit=crop&crop=center',
           bannerAlt: t('ad.insurance.video_alt'),
           bannerTag: t('ad.insurance.banner_tag'),
           bannerTitle: g ? t('generic.ad.insurance.banner_title') : t('ad.insurance.banner_title'),
@@ -224,10 +235,14 @@ export default function App() {
           outstreamAlt: t('ad.insurance.video_alt'),
         }
       : {
-          videoImg: g ? GENERIC_AD_VIDEO_STILL : 'https://images.unsplash.com/photo-1603584173870-7f23fdae1b7a?w=750&h=422&fit=crop&crop=center',
+          videoImg: g
+            ? CAR_AD_VIDEO_STILL
+            : 'https://images.unsplash.com/photo-1603584173870-7f23fdae1b7a?w=750&h=422&fit=crop&crop=center',
           videoAlt: t('ad.car.video_alt'),
           advertiser: g ? t('generic.ad.car.advertiser') : t('ad.car.advertiser'),
-          bannerImg: g ? GENERIC_AD_BANNER_STRIP : 'https://images.unsplash.com/photo-1603584173870-7f23fdae1b7a?w=700&h=200&fit=crop&crop=center',
+          bannerImg: g
+            ? CAR_AD_BANNER_STRIP
+            : 'https://images.unsplash.com/photo-1603584173870-7f23fdae1b7a?w=700&h=200&fit=crop&crop=center',
           bannerAlt: t('ad.car.video_alt'),
           bannerTag: t('ad.car.banner_tag'),
           bannerTitle: g ? t('generic.ad.car.banner_title') : t('ad.car.banner_title'),
@@ -461,9 +476,9 @@ export default function App() {
               <div className="pl-3 pt-2 pb-3 flex gap-[10px] overflow-x-auto scrollbar-hide">
                 {(genericBranding
                   ? [
-                      { rank: 1, title: t('generic.channel_title_1'), sub: t('generic.ranking_sub_1'), pct: '30.6%', color: '#0072bc', logo: t('generic.channel_logo_1'), img: GENERIC_RANKING_THUMB },
-                      { rank: 2, title: t('generic.channel_title_2'), sub: t('generic.ranking_sub_2'), pct: '10.4%', color: '#c8102e', logo: t('generic.channel_logo_2'), img: GENERIC_RANKING_THUMB },
-                      { rank: 3, title: t('generic.channel_title_3'), sub: t('generic.ranking_sub_3'), pct: '8.3%', color: '#e85d00', logo: t('generic.channel_logo_3'), img: GENERIC_RANKING_THUMB },
+                      { rank: 1, title: t('generic.channel_title_1'), sub: t('generic.ranking_sub_1'), pct: '30.6%', color: '#0072bc', logo: t('generic.channel_logo_1'), img: GENERIC_RANKING_THUMBS[0] },
+                      { rank: 2, title: t('generic.channel_title_2'), sub: t('generic.ranking_sub_2'), pct: '10.4%', color: '#c8102e', logo: t('generic.channel_logo_2'), img: GENERIC_RANKING_THUMBS[1] },
+                      { rank: 3, title: t('generic.channel_title_3'), sub: t('generic.ranking_sub_3'), pct: '8.3%', color: '#e85d00', logo: t('generic.channel_logo_3'), img: GENERIC_RANKING_THUMBS[2] },
                     ]
                   : [
                       { rank: 1, title: 'YTN', sub: t('ranking.sub_newsquare'), pct: '30.6%', color: '#0072bc', logo: 'YTN', img: 'https://images.unsplash.com/photo-1495020689067-958852a7765e?w=300&h=170&fit=crop' },
@@ -502,7 +517,9 @@ export default function App() {
                 />
               ) : (
                 <div className="relative w-full bg-[#111] overflow-hidden">
-                  <div className="absolute top-[8px] left-[10px] bg-black/60 text-white text-[9px] font-bold px-[6px] py-[2px] rounded z-10">AD</div>
+                  <div className="absolute top-[8px] left-[10px] bg-black/60 text-white text-[9px] font-bold px-[6px] py-[2px] rounded z-10">
+                    AD
+                  </div>
                   <button className="absolute top-[8px] right-[10px] text-white/70 z-10">
                     <VolumeX size={16} />
                   </button>
@@ -515,13 +532,14 @@ export default function App() {
                     <ExternalLink size={11} strokeWidth={2.5} />
                   </button>
 
-                  <div className="w-full aspect-video bg-[#111] overflow-hidden">
+                  <div className="relative w-full aspect-video bg-[#111] overflow-hidden">
                     <img
                       src={adContent.videoImg}
                       alt={adContent.outstreamAlt}
                       className="w-full h-full object-cover"
                       referrerPolicy="no-referrer"
                     />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/35 via-transparent to-transparent pointer-events-none" />
                   </div>
 
                   {/* Red progress bar */}
@@ -540,9 +558,9 @@ export default function App() {
               <div className="pl-4 pb-4 flex gap-[10px] overflow-x-auto scrollbar-hide">
                 {(genericBranding
                   ? [
-                      { title: t('generic.binge_1'), ep: `7${t('binge.ep')}`, img: GENERIC_BINGE_POSTER },
-                      { title: t('generic.binge_2'), ep: `8${t('binge.ep')}`, img: GENERIC_BINGE_POSTER },
-                      { title: t('generic.binge_3'), ep: `8${t('binge.ep')}`, img: GENERIC_BINGE_POSTER },
+                      { title: t('generic.binge_1'), ep: `7${t('binge.ep')}`, img: GENERIC_BINGE_POSTERS[0] },
+                      { title: t('generic.binge_2'), ep: `8${t('binge.ep')}`, img: GENERIC_BINGE_POSTERS[1] },
+                      { title: t('generic.binge_3'), ep: `8${t('binge.ep')}`, img: GENERIC_BINGE_POSTERS[2] },
                     ]
                   : [
                       { title: t('binge.samsiseki5'), ep: `7${t('binge.ep')}`, img: 'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=280&h=380&fit=crop' },
@@ -600,7 +618,7 @@ export default function App() {
                     className="w-full h-full object-cover"
                     referrerPolicy="no-referrer"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent pointer-events-none" />
 
                   <button
                     onClick={() => handleTriggerAd(viewMode)}
@@ -772,10 +790,10 @@ export default function App() {
               <div className="px-4 pt-3 space-y-[14px] pb-36">
                 {(genericBranding
                   ? [
-                      { title: t('generic.channel_title_1'), time: '13:50 ~ 15:50', logo: t('generic.channel_logo_1'), color: '#0072bc' },
-                      { title: t('generic.channel_title_2'), time: '14:18 ~ 15:37', logo: t('generic.channel_logo_2'), color: '#c8102e' },
-                      { title: t('generic.channel_title_3'), time: '13:40 ~ 15:10', logo: t('generic.channel_logo_3'), color: '#e85d00' },
-                      { title: t('generic.channel_title_4'), time: '14:29 ~ 14:50', logo: t('generic.channel_logo_4'), color: '#00b4d8' },
+                      { title: t('generic.channel_title_1'), time: '13:50 ~ 15:50', logo: t('generic.channel_logo_1'), color: '#0072bc', thumb: GENERIC_CHANNEL_THUMBS[0] },
+                      { title: t('generic.channel_title_2'), time: '14:18 ~ 15:37', logo: t('generic.channel_logo_2'), color: '#c8102e', thumb: GENERIC_CHANNEL_THUMBS[1] },
+                      { title: t('generic.channel_title_3'), time: '13:40 ~ 15:10', logo: t('generic.channel_logo_3'), color: '#e85d00', thumb: GENERIC_CHANNEL_THUMBS[2] },
+                      { title: t('generic.channel_title_4'), time: '14:29 ~ 14:50', logo: t('generic.channel_logo_4'), color: '#00b4d8', thumb: GENERIC_CHANNEL_THUMBS[3] },
                     ]
                   : [
                       { title: t('content.title'), time: '13:50 ~ 15:50', logo: 'YTN', color: '#0072bc' },
@@ -786,10 +804,18 @@ export default function App() {
                 ).map((item, i) => (
                   <div key={i} className="flex gap-3 items-center">
                     <div className="relative w-[124px] aspect-video rounded-lg overflow-hidden shrink-0">
-                      <div className="absolute inset-0 flex items-center justify-center" style={{ backgroundColor: item.color }}>
-                        <span className="text-white font-bold text-[10px] text-center leading-tight px-1 drop-shadow">{item.logo}</span>
-                      </div>
-                      
+                      {'thumb' in item && item.thumb ? (
+                        <>
+                          <img src={item.thumb} alt="" className="absolute inset-0 w-full h-full object-cover" referrerPolicy="no-referrer" />
+                          <div className="absolute inset-0 flex items-center justify-center bg-black/45">
+                            <span className="text-white font-bold text-[10px] text-center leading-tight px-1 drop-shadow">{item.logo}</span>
+                          </div>
+                        </>
+                      ) : (
+                        <div className="absolute inset-0 flex items-center justify-center" style={{ backgroundColor: item.color }}>
+                          <span className="text-white font-bold text-[10px] text-center leading-tight px-1 drop-shadow">{item.logo}</span>
+                        </div>
+                      )}
                     </div>
                     <div className="flex-1 min-w-0">
                       <h4 className="text-white text-[13px] font-medium leading-snug line-clamp-2">{item.title}</h4>
@@ -812,7 +838,7 @@ export default function App() {
             onClose={() => { setIsInAppBrowserOpen(false); setSelectedProductId(null); }}
             url={isProduct
               ? genericBranding
-                ? buildGenericDemoUrl(selectedProductId, isStaticList)
+                ? buildGenericPreviewUrl(selectedProductId, isStaticList)
                 : selectedProductId
                   ? isStaticList
                     ? `https://www.oliveyoung.co.kr/store/goods/${selectedProductId}`
@@ -820,7 +846,7 @@ export default function App() {
                   : isStaticList
                     ? 'https://www.oliveyoung.co.kr/store/brand/mediheal'
                     : 'https://www.oliveyoung.co.kr/store/planshop'
-              : 'https://tving.com/ads'
+              : 'https://example.com/ads'
             }
           >
             {isProduct ? (
@@ -885,7 +911,7 @@ export default function App() {
           )}
         </div>
 
-        {/* Messaging: Arrow + demo messenger phone */}
+        {/* Messaging: Arrow + second phone mockup */}
         {isMessaging && (
           <>
             <div className="flex flex-col items-center gap-1 text-gray-500 shrink-0">
@@ -905,10 +931,7 @@ export default function App() {
 
               {isKakaoActive ? (
                 <div className="absolute inset-0 z-10 overflow-hidden">
-                  <div className="h-[11px] bg-black" />
-                  <div className="h-[calc(100%-11px)]">
-                    {locale === 'en' ? <LineChannelFlow key={kakaoKey} /> : <KakaoChannelFlow key={kakaoKey} />}
-                  </div>
+                  {locale === 'en' ? <LineChannelFlow key={kakaoKey} /> : <KakaoChannelFlow key={kakaoKey} />}
                 </div>
               ) : locale === 'en' ? (
                 <div

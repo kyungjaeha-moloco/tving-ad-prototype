@@ -63,9 +63,9 @@ export default function LineChannelFlow() {
           </div>
           <div className="flex-1">
             <div className="flex items-center gap-1.5">
-              <span className="text-black font-bold text-[16px]">{brandNameShort}</span>
-              <div className="bg-[#06C755] rounded-full px-1.5 py-[1px]">
-                <span className="text-white text-[7px] font-bold">Premium</span>
+              <span className="text-black font-bold text-[16px] leading-tight">{brandNameShort}</span>
+              <div className="inline-flex items-center justify-center bg-[#06C755] rounded-full px-1.5 h-[18px] shrink-0">
+                <span className="text-white text-[7px] font-bold leading-none">Premium</span>
               </div>
             </div>
             <p className="text-gray-500 text-[12px]">Friends 554,501</p>

@@ -9,7 +9,7 @@ interface InAppBrowserProps {
   url?: string;
 }
 
-export default function InAppBrowser({ isOpen, onClose, children, url = 'https://tving.com/ads' }: InAppBrowserProps) {
+export default function InAppBrowser({ isOpen, onClose, children, url = 'https://example.com/ads' }: InAppBrowserProps) {
   return (
     <AnimatePresence>
       {isOpen && (

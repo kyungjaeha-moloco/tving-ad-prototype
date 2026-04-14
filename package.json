@@ -8,7 +8,11 @@
     "build": "vite build",
     "preview": "vite preview",
     "clean": "rm -rf dist",
-    "lint": "tsc --noEmit"
+    "lint": "tsc --noEmit",
+    "generate:generic-products": "tsx scripts/generate-generic-catalog-images.ts",
+    "generate:generic-hero": "tsx scripts/generate-generic-hero.ts",
+    "generate:car-ad-video": "tsx scripts/generate-car-ad-video-still.ts",
+    "generate:car-ad-banner": "tsx scripts/generate-car-ad-banner.ts"
   },
   "dependencies": {
     "@google/genai": "^1.29.0",

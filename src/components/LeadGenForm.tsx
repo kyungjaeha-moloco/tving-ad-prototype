@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { CheckCircle } from 'lucide-react';
 import { useLocale } from '../LocaleContext';
-import { GENERIC_LEADGEN_HEADER } from '../branding';
+import { t as translate } from '../i18n';
+import { GENERIC_LEADGEN_HEADER_CAR, GENERIC_LEADGEN_HEADER_INSURANCE } from '../branding';
 
-const MOCK_USER = { name: '하경제', phone: '010-1234-5678', car: 'EV6 GT-Line' };
+const MOCK_USER = { phone: '010-1234-5678', car: 'EV6 GT-Line' };
 
 interface LeadGenFormProps {
   onSubmit: () => void;
@@ -11,11 +12,15 @@ interface LeadGenFormProps {
 }
 
 export default function LeadGenForm({ onSubmit, variant = 'car' }: LeadGenFormProps) {
-  const { t, genericBranding } = useLocale();
+  const { t, genericBranding, locale } = useLocale();
   const [submitted, setSubmitted] = useState(false);
-  const [name, setName] = useState(MOCK_USER.name);
+  const [name, setName] = useState(() => translate('native.mock_name', locale));
   const [phone, setPhone] = useState(MOCK_USER.phone);
   const [car, setCar] = useState(MOCK_USER.car);
+
+  useEffect(() => {
+    setName(translate('native.mock_name', locale));
+  }, [locale]);
 
   const isCar = variant === 'car';
   const accentColor = isCar ? '#0b2a4a' : '#1a5632';
@@ -56,7 +61,9 @@ export default function LeadGenForm({ onSubmit, variant = 'car' }: LeadGenFormPr
         <img
           src={
             genericBranding
-              ? GENERIC_LEADGEN_HEADER
+              ? isCar
+                ? GENERIC_LEADGEN_HEADER_CAR
+                : GENERIC_LEADGEN_HEADER_INSURANCE
               : isCar
                 ? 'https://picsum.photos/seed/luxury_suv_ev/800/400'
                 : 'https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=800&h=400&fit=crop'
