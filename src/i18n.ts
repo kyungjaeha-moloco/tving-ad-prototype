@@ -151,14 +151,45 @@ const translations = {
   'native.insurance_label': { ko: '보험', en: 'Insurance' },
   'native.consulting_label': { ko: '상담', en: 'Time' },
 
-  // Web Bridge
-  'bridge.moving_to_kakao': { ko: '카카오톡으로 이동중입니다...', en: 'Redirecting to LINE...' },
+  // Web Bridge (fictional demo messenger — not third-party marks)
+  'bridge.moving_to_kakao': { ko: '데모톡으로 이동 중입니다...', en: 'Opening DemoChat...' },
   'bridge.please_wait': { ko: '잠시만 기다려주세요', en: 'Please wait' },
 
-  // Messaging App (KakaoTalk for KR, LINE for EN)
-  'kakao.name': { ko: '카카오톡', en: 'LINE' },
-  'kakao.channel_move': { ko: '광고 클릭 시 카카오톡 채널로 이동합니다', en: 'Click the ad to open LINE Official Account' },
-  'kakao.alert': { ko: '카카오톡 채널로 연결됩니다.', en: 'Connecting to LINE Official Account.' },
+  // App-to-app idle phone (demo messenger names)
+  'kakao.name': { ko: '데모톡', en: 'DemoChat' },
+  'kakao.channel_move': { ko: '광고 클릭 시 데모톡 채널로 이동합니다', en: 'Tap the ad to open the DemoChat channel' },
+  'kakao.alert': { ko: '데모톡 채널로 연결됩니다.', en: 'Connecting to DemoChat channel.' },
+
+  // Messaging flows (Kakao-style / LINE-style UI copy — generic app name)
+  'messaging.marketing_optin': {
+    ko: '광고와 마케팅 메시지를\n데모톡으로 받아볼 수 있습니다.',
+    en: 'You can receive ads and marketing\nmessages via DemoChat.',
+  },
+  'messaging.official_badge': { ko: '· 공식 데모톡', en: '· Official DemoChat' },
+  'messaging.add_friend_ads': {
+    ko: '이 계정으로 광고·프로모션 메시지를\n데모톡으로 받아보게 됩니다.',
+    en: "You'll receive ads and promotional\nmessages from this account via DemoChat.",
+  },
+  'messaging.chat_thanks_friend': {
+    ko: "'{name}' 채널을 데모톡 친구로 추가해 주셔서 감사합니다.",
+    en: "Thank you for adding '{name}' on DemoChat!",
+  },
+  'messaging.chat_inbox_line': {
+    ko: '데모톡에서 보험 안내와 프로모션을 받아보실 수 있습니다.',
+    en: "You'll receive plans and promotions in your DemoChat inbox.",
+  },
+  'messaging.welcome_official_account': {
+    ko: '{brand} 공식 데모톡 계정입니다. 보험 안내와 프로모션 소식을 받아보세요.',
+    en: "Welcome to {brand}'s official DemoChat account. Get insurance updates, tips, and offers.",
+  },
+  'messaging.chat_consult_offer': {
+    ko: '언제든지 상담을 요청하실 수 있습니다.',
+    en: 'Chat with us anytime for personalized consultations.',
+  },
+  'messaging.chat_welcome_brand': {
+    ko: '{brand}와 함께해 주셔서 감사합니다.',
+    en: 'Thanks for connecting with {brand}.',
+  },
 
   // Binge content
   'binge.ep': { ko: '화', en: 'EP' },

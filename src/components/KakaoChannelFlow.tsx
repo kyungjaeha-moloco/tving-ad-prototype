@@ -7,6 +7,7 @@ type KakaoStep = 'channel_home' | 'subscribe_popup' | 'chatroom';
 export default function KakaoChannelFlow() {
   const [step, setStep] = useState<KakaoStep>('channel_home');
   const { locale, genericBranding, t } = useLocale();
+  const marketingOptinLines = t('messaging.marketing_optin').split('\n');
   const isEn = locale === 'en';
 
   const StatusBar = () => (
@@ -150,10 +151,9 @@ export default function KakaoChannelFlow() {
           </div>
         </div>
         <p className="text-gray-600 text-[13px] leading-relaxed mb-5">
-          {isEn
-            ? <>You can receive ads and marketing<br />messages via KakaoTalk.</>
-            : <>광고와 마케팅 메시지를<br />카카오톡으로 받아볼 수 있습니다.</>
-          }
+          {marketingOptinLines[0]}
+          <br />
+          {marketingOptinLines[1] ?? ''}
         </p>
         <div className="flex gap-3">
           <button

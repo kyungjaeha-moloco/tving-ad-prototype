@@ -7,6 +7,7 @@ type LineStep = 'channel_home' | 'add_friend_popup' | 'chatroom';
 export default function LineChannelFlow() {
   const [step, setStep] = useState<LineStep>('channel_home');
   const { genericBranding, t } = useLocale();
+  const addFriendAdsLines = t('messaging.add_friend_ads').split('\n');
 
   const brandName = genericBranding ? t('generic.financial_full') : 'Samsung Life Insurance';
   const brandNameShort = genericBranding ? t('generic.financial_short') : 'Samsung Life';
@@ -69,7 +70,10 @@ export default function LineChannelFlow() {
           </div>
         </div>
 
-        <p className="text-gray-500 text-[12px] mt-2">{brandName} OFFICIAL LINE</p>
+        <p className="text-gray-500 text-[12px] mt-2">
+          {brandName}
+          {t('messaging.official_badge')}
+        </p>
         <p className="text-[#06C755] text-[12px]">{genericBranding ? t('generic.financial_url') : 'insurance.samsung.com'}</p>
 
         <button
@@ -97,7 +101,9 @@ export default function LineChannelFlow() {
         <h4 className="text-black font-bold text-[14px] mb-3">Account Info</h4>
         <div className="bg-gray-50 rounded-xl p-4">
           <p className="text-gray-700 text-[12px] leading-relaxed">
-            {genericBranding ? t('generic.line.welcome_blurb') : `Welcome to ${brandName}'s official LINE account! Stay updated with the latest insurance plans, financial tips, and exclusive promotions. Chat with us anytime for personalized consultations.`}
+            {genericBranding
+              ? t('generic.line.welcome_blurb')
+              : t('messaging.welcome_official_account').replace('{brand}', brandName)}
           </p>
         </div>
 
@@ -148,7 +154,9 @@ export default function LineChannelFlow() {
           </div>
         </div>
         <p className="text-gray-600 text-[13px] leading-relaxed mb-5">
-          You'll receive ads and promotional<br />messages from this account via LINE.
+          {addFriendAdsLines[0]}
+          <br />
+          {addFriendAdsLines[1] ?? ''}
         </p>
         <div className="flex gap-3">
           <button
@@ -207,18 +215,16 @@ export default function LineChannelFlow() {
             <span className="text-black/70 text-[11px] font-medium">{brandNameShort}</span>
             <div className="bg-white rounded-xl rounded-tl-sm p-3 mt-1 max-w-[240px]">
               <p className="text-black text-[12px] leading-relaxed">
-                {genericBranding ? t('generic.line.welcome_blurb') : `Thank you for adding '${brandNameShort}' as a friend on LINE!`}
+                {genericBranding
+                  ? t('generic.line.welcome_blurb')
+                  : t('messaging.chat_thanks_friend').replace('{name}', brandNameShort)}
               </p>
               {!genericBranding && (
                 <>
+                  <p className="text-black text-[12px] leading-relaxed mt-2">{t('messaging.chat_inbox_line')}</p>
+                  <p className="text-black text-[12px] leading-relaxed mt-2">{t('messaging.chat_consult_offer')}</p>
                   <p className="text-black text-[12px] leading-relaxed mt-2">
-                    You'll now receive exclusive insurance plans, financial tips, and special promotions directly in your LINE inbox.
-                  </p>
-                  <p className="text-black text-[12px] leading-relaxed mt-2">
-                    Feel free to chat with us anytime for personalized consultations. Our team is here to help! 🤝
-                  </p>
-                  <p className="text-black text-[12px] leading-relaxed mt-2">
-                    Welcome to {brandName}! 💙
+                    {t('messaging.chat_welcome_brand').replace('{brand}', brandName)} 💙
                   </p>
                 </>
               )}

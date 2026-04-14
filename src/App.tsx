@@ -885,7 +885,7 @@ export default function App() {
           )}
         </div>
 
-        {/* Messaging: Arrow + KakaoTalk Phone */}
+        {/* Messaging: Arrow + demo messenger phone */}
         {isMessaging && (
           <>
             <div className="flex flex-col items-center gap-1 text-gray-500 shrink-0">
